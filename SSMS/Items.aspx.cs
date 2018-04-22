@@ -360,7 +360,7 @@ namespace SSMS {
         }
 
         // Get supplier name by its id
-        private static string GetSupplierName(SqlConnection connection, Object objId) {
+        public static string GetSupplierName(SqlConnection connection, Object objId) {
 
             if (!(objId is DBNull)) {
 
@@ -388,7 +388,7 @@ namespace SSMS {
         }
 
         // Get category name by its id
-        private static string GetCategoryName(SqlConnection connection, Object objId) {
+        public static string GetCategoryName(SqlConnection connection, Object objId) {
 
             if (!(objId is DBNull)) {
 
@@ -416,7 +416,7 @@ namespace SSMS {
         }
 
         // Get user name by its id
-        private static string GetUserName(SqlConnection connection, Object objId) {
+        public static string GetUserName(SqlConnection connection, Object objId) {
 
             if (!(objId is DBNull)) {
 

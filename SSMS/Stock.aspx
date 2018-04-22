@@ -283,31 +283,16 @@
                             <%--Dynamic Field--%>
                         </select>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4" style="padding-top: 10px;">
                     	<div class="checkbox-toggle">
 							<input type="checkbox" id="showLessDetails"/>
-							<label for="showLessDetails">Show less details</label>
-						</div>
-						<div class="checkbox-toggle">
-							<input type="checkbox" id="showMoreDetails" checked />
-							<label for="showMoreDetails">Show more details</label>
-						</div>
+							<label for="showLessDetails">Show more details</label>
+						</div>					
                     </div>
                	</div>
                	<section class="card" style="margin: 10px 20px 10px 20px;">	
 				   	<table id="ItemStockedByCompanyTable" class="table table-bordered table-hover hidden">
-					    <thead>
-					        <tr>
-						        <th width="1">#</th>
-						        <th>Item Name</th>
-						        <th>Arrived Quantity</th>
-						        <th>Stock Quantity</th>
-						        <th>Arrived Date</th>
-					        </tr>
-					    </thead>
-					    <tbody id="itemDetailsTableBody">
-		                    <%--Dynamic content--%>
-					    </tbody>
+					    <%--Dynamic--%>
 				    </table>
 			    </section>
 		    </div>
@@ -666,24 +651,20 @@
             // Touch spin setup
             $("input[name='quantity']").TouchSpin();
 
-            
-
-
-
             // Jquery table editable setting
-       //     $('#table-edit').Tabledit({
+            //     $('#table-edit').Tabledit({
 
-       //         url: 'Customers.aspx',
-			    //columns: {
-				   // identifier: [0, 'id'],
-       //             editable: [[1, 'cName'], [2, 'cContactNo'], [3, 'cEmail'], [4, 'cAddress']]
-			    //}
+            //         url: 'Customers.aspx',
+            //columns: {
+            // identifier: [0, 'id'],
+            //             editable: [[1, 'cName'], [2, 'cContactNo'], [3, 'cEmail'], [4, 'cAddress']]
+            //}
 
-       //     });
+            //     });
 
             // Customer details table edited data save button click listener
             $(".tabledit-save-button").click(function () {
-               
+
                 var jsonObj = {};
 
                 $(this).closest('tr').find('input').each(function () {
@@ -748,7 +729,7 @@
                         type: "warning"
                     });
                 }
-                        
+
             });
 
             $(".tabledit-confirm-button").click(function (e) {
@@ -901,21 +882,21 @@
             function insertIntoStock() {
 
                 var supplierData = JSON.stringify({
-                    pId : $("#productName option:selected").val(),
-                    quantity : $("#quantity").val(),
-                    arrivedDate : $("#date-mask-input").val(),
-                    uId : $("#userName option:selected").val()
+                    pId: $("#productName option:selected").val(),
+                    quantity: $("#quantity").val(),
+                    arrivedDate: $("#date-mask-input").val(),
+                    uId: $("#userName option:selected").val()
                 });
 
                 try {
                     $.ajax({
-                        type : "POST",
-                        url : "Stock.aspx/InsertIntoStock",
-                        data : supplierData,
-                        contentType : "application/json; charset=utf-8",
-                        dataType : "json",
-                        success : onSuccess,
-                        failure : onFailure
+                        type: "POST",
+                        url: "Stock.aspx/InsertIntoStock",
+                        data: supplierData,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: onSuccess,
+                        failure: onFailure
                     });
 
                     function onFailure(AjaxResponse) {
@@ -952,7 +933,7 @@
                                     type: "warning"
                                 });
                         }
-                        
+
                     }
                 } catch (exe) {
                     swal({
@@ -962,43 +943,51 @@
                     });
                 }
 
-            }   
-
-        });
-
-        function loadProductList() {
-
-            // Setting up product name list
-            $.ajax({
-                type: "POST",
-                url: "Stock.aspx/GetProductAndUser",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: onResultSuccess
-            });
-
-            function onResultSuccess(AjaxResponse) {
-
-                // Response of ajax will be in <option>##<option>##<option> format and we need to split those three by ##
-                // Once splited we will append options into select tag
-                var optionArray = AjaxResponse.d.split('##');
-                // Before appending options dont forget to clear select otherwise item will be repeated
-                $("#productNameForStock").children('option:not(:first)').remove();
-                $("#productNameForStock").append(optionArray[0]);
-
             }
 
-        }
+          
+            $("#productNameForStock").change(function () {
 
-        $("#productNameForStock").change(function () {
+                if ($("#productNameForStock option:selected").val() == 0) {
+                    $("#ItemStockedByCompanyTable").addClass('hidden');
+                } else {
 
-            if ($("#productNameForStock option:selected").val() == 0) {
-                $("#ItemStockedByCompanyTable").addClass('hidden');
-            } else {
+                    var productId = JSON.stringify({
+                        productId : $("#productNameForStock option:selected").val()
+                    });
 
-                var productId = JSON.stringify({
-                    productId : $("#productNameForStock option:selected").val()
-                });
+                    if ($("#showLessDetails").is(':checked')) {
+                        getStockMoreDetailInformation(productId);
+                    } else {                           
+                        getStockLessDetailInformation(productId);
+                    }                   
+
+                }
+
+            });
+
+
+            $("#showLessDetails").change(function () {
+
+                if ($("#productNameForStock option:selected").val() == 0) {
+                    $("#ItemStockedByCompanyTable").addClass('hidden');
+                } else {
+
+                    var productId = JSON.stringify({
+                        productId : $("#productNameForStock option:selected").val()
+                    });
+
+                    if (this.checked) {
+                        getStockMoreDetailInformation(productId);
+                    } else {                           
+                        getStockLessDetailInformation(productId);
+                    }                   
+
+                }
+
+            }) 
+
+            function getStockLessDetailInformation(productId) {
 
                 try {
                     $.ajax({
@@ -1020,9 +1009,8 @@
                     }
 
                     function onSuccess(AjaxResponse) {
-
-                        // Before appending into table dont forget to clear select otherwise item will be repeated
-                        $("#itemDetailsTableBody").empty();
+                        
+                        appendLessDetailsTable();
                         $("#itemDetailsTableBody").append(AjaxResponse.d);
                         $("#ItemStockedByCompanyTable").removeClass('hidden');
 
@@ -1038,7 +1026,120 @@
 
             }
 
+            function getStockMoreDetailInformation(productId) {
+
+                try {
+                    $.ajax({
+                        type: "POST",
+                        url: "Stock.aspx/GetStockWithProductDetails",
+                        contentType: "application/json; charset=utf-8",
+                        data : productId,
+                        dataType: "json",
+                        success: onSuccess,
+                        failure: onFailure
+                    });
+
+                    function onFailure(AjaxResponse) {
+                        swal({
+                            title: "Error found",
+                            text: AjaxResponse.d,
+                            type: "warning"
+                        });
+                    }
+
+                    function onSuccess(AjaxResponse) {
+
+                        appendMoreDetailsTable();
+                        $("#itemDetailsTableBody").append(AjaxResponse.d);
+                        $("#ItemStockedByCompanyTable").removeClass('hidden');
+
+                    }
+
+                } catch (exe) {
+                    swal({
+                        title: "Error found",
+                        text: exe,
+                        type: "warning"
+                    });
+                }
+
+            }
+
+            function appendLessDetailsTable() {
+
+                var appendThis =
+                    '<thead>'+
+					    '<tr>'+
+						    '<th width="1">#</th>'+
+						    '<th>Item Name</th>'+
+                            '<th>Arrived Quantity</th>'+
+                            '<th>Stock Quantity</th>' +
+                            '<th>Arrived Date</th>'+
+					    '</tr>'+
+				    '</thead>'+
+				    '<tbody id="itemDetailsTableBody">'+		            
+                    '</tbody>';
+
+                $("#ItemStockedByCompanyTable").empty();
+                $("#ItemStockedByCompanyTable").append(appendThis);
+
+            }
+
+            function appendMoreDetailsTable() {
+
+                var appendThis =
+                    '<thead>'+
+					    '<tr>'+
+						    '<th width="1">#</th>'+
+						    '<th>Item Name</th>'+
+						    '<th>Code</th>'+
+						    '<th>Category</th>'+
+                            '<th>Description</th>'+
+                            '<th>Price</th>'+
+                            '<th>Purchase Date</th>'+
+                            '<th>Arrived date</th>'+
+                            '<th>Arrived Qty</th>'+
+                            '<th>Stock Qty</th>'+
+                            '<th>Supplier</th>'+
+                            '<th>User</th>'+
+					    '</tr>'+
+				    '</thead>'+
+				    '<tbody id="itemDetailsTableBody">'+		            
+                    '</tbody>';
+
+                $("#ItemStockedByCompanyTable").empty();
+                $("#ItemStockedByCompanyTable").append(appendThis);
+
+            }
+
+
         });
+
+        // Set product name is select tag for checking stock details
+        function loadProductList() {
+
+                // Setting up product name list
+                $.ajax({
+                    type: "POST",
+                    url: "Stock.aspx/GetProductAndUser",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: onResultSuccess
+                });
+
+                function onResultSuccess(AjaxResponse) {
+
+                    // Response of ajax will be in <option>##<option>##<option> format and we need to split those three by ##
+                    // Once splited we will append options into select tag
+                    var optionArray = AjaxResponse.d.split('##');
+                    // Before appending options dont forget to clear select otherwise item will be repeated
+                    $("#productNameForStock").children('option:not(:first)').remove();
+                    $("#productNameForStock").append(optionArray[0]);
+
+                }
+
+            }
+        
 
     </script>
 

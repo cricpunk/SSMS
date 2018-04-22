@@ -226,6 +226,57 @@ namespace SSMS {
 
         }
 
+        [WebMethod]
+        public static string GetStockWithProductDetails(string productId) {
+
+            try {
+
+                SqlConnection connection = new SqlConnection(connectingStringSSMS);
+                connection.Open();
+
+                SqlCommand cmdStockWithProductDetails = new SqlCommand {
+                    Connection = connection,
+                    CommandText = "SELECT s.stock_id, s.arrived_quantity, s.stock_quantity, s.arrived_date, " +
+                                        "p.item_name, p.item_code, p.description, p.price, p.purchase_date, p.category_id, p.supplier_id, p.user_id " +
+                                        "FROM stock s " +
+                                        "JOIN product_details p " +
+                                        "ON s.product_id = p.product_id " +
+                                        "WHERE s.product_id = " + Convert.ToInt32(productId) + "",
+                    CommandType = CommandType.Text
+                };
+
+                // Items table start
+                SqlDataReader stockDataReader = cmdStockWithProductDetails.ExecuteReader();
+                StringBuilder stockTable = new StringBuilder();
+                while (stockDataReader.Read()) {
+                   
+                    stockTable.Append("<tr>");
+                    stockTable.Append("<td class='color-blue-grey-lighter'>" + stockDataReader.GetValue(0) + "</td>");
+                    stockTable.Append("<td>" + stockDataReader.GetValue(4) + "</td>");
+                    stockTable.Append("<td>" + stockDataReader.GetValue(5) + "</td>");
+                    stockTable.Append("<td>" + SSMS.Items.GetCategoryName(connection, stockDataReader.GetValue(9)) + "</td>");
+                    stockTable.Append("<td>" + stockDataReader.GetValue(6) + "</td>");
+                    stockTable.Append("<td>" + stockDataReader.GetValue(7) + "</td>");
+                    stockTable.Append("<td>" + stockDataReader.GetValue(8) + "</td>");
+                    stockTable.Append("<td>" + stockDataReader.GetValue(3) + "</td>");
+                    stockTable.Append("<td>" + stockDataReader.GetValue(1) + "</td>");
+                    stockTable.Append("<td>" + stockDataReader.GetValue(2) + "</td>");
+                    stockTable.Append("<td>" + SSMS.Items.GetSupplierName(connection, stockDataReader.GetValue(10)) + "</td>");
+                    stockTable.Append("<td>" + SSMS.Items.GetUserName(connection, stockDataReader.GetValue(11)) + "</td>");
+                    stockTable.Append("</tr>");
+
+                }
+                stockDataReader.Close();
+
+                return stockTable.ToString();
+
+            } catch(Exception e) {
+                return e.Message;
+            }
+            
+
+        }
+
         private static int GetStockQuantity(Object id, SqlConnection connection) {
 
             int productId = Convert.ToInt32(id);
