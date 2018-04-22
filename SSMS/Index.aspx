@@ -16,13 +16,7 @@
 	<link href="img/favicon.png" rel="icon" type="image/png"/>
 	<link href="img/favicon.ico" rel="shortcut icon"/>
 
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-	<link rel="stylesheet" href="css/lib/lobipanel/lobipanel.min.css"/>
+    <link rel="stylesheet" href="css/lib/lobipanel/lobipanel.min.css"/>
 	<link rel="stylesheet" href="css/separate/vendor/lobipanel.min.css"/>
 	<link rel="stylesheet" href="css/lib/jqueryui/jquery-ui.min.css"/>
 	<link rel="stylesheet" href="css/separate/pages/widgets.min.css"/>
@@ -38,6 +32,9 @@
 
     <link rel="stylesheet" href="css/lib/bootstrap-sweetalert/sweetalert.css"/>
     <link rel="stylesheet" href="css/separate/vendor/sweet-alert-animations.min.css"/>
+
+    <link rel="stylesheet" href="css/separate/vendor/bootstrap-touchspin.min.css"/>
+    <link rel="stylesheet" href="css/separate/vendor/typeahead.min.css"/>
 
     <style type="text/css">
     	
@@ -238,7 +235,7 @@
 	    			<div class="box-typical box-typical-padding" style="background-color: #00a8ff; height: 145px;">
 						<div class="gallery-grid">
 
-							<div class="gallery-col" type="button" data-toggle="modal" data-target="#salesModal">
+							<div class="gallery-col" data-toggle="modal" data-target="#salesModal" id="btnSaleCircle">
 								<article class="gallery-item">
 									<img class="gallery-picture" src="img/sales.png" alt="">
 									<div class="gallery-hover-layout">
@@ -303,117 +300,45 @@
 	                </div>
             	</div>
         	</div>
-
-	        <div class="row">
-	            <div class="col-xl-6">
-	                <div class="chart-statistic-box">
-	                    <div class="chart-txt">
-	                        <div class="chart-txt-top">
-	                            <p><span class="unit">$</span><span class="number">1540</span></p>
-	                            <p class="caption">Week income</p>
-	                        </div>
-	                        <table class="tbl-data">
-	                            <tr>
-	                                <td class="price color-purple">120$</td>
-	                                <td>Orders</td>
-	                            </tr>
-	                            <tr>
-	                                <td class="price color-yellow">15$</td>
-	                                <td>Investments</td>
-	                            </tr>
-	                            <tr>
-	                                <td class="price color-lime">55$</td>
-	                                <td>Others</td>
-	                            </tr>
-	                        </table>
-	                    </div>
-	                    <div class="chart-container">
-	                        <div class="chart-container-in">
-	                            <div id="chart_div"></div>
-	                            <header class="chart-container-title">Income</header>
-	                            <div class="chart-container-x">
-	                                <div class="item"></div>
-	                                <div class="item">tue</div>
-	                                <div class="item">wed</div>
-	                                <div class="item">thu</div>
-	                                <div class="item">fri</div>
-	                                <div class="item">sat</div>
-	                                <div class="item">sun</div>
-	                                <div class="item">mon</div>
-	                                <div class="item"></div>
-	                            </div>
-	                            <div class="chart-container-y">
-	                                <div class="item">300</div>
-	                                <div class="item"></div>
-	                                <div class="item">250</div>
-	                                <div class="item"></div>
-	                                <div class="item">200</div>
-	                                <div class="item"></div>
-	                                <div class="item">150</div>
-	                                <div class="item"></div>
-	                                <div class="item">100</div>
-	                                <div class="item"></div>
-	                                <div class="item">50</div>
-	                                <div class="item"></div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div><!--.chart-statistic-box-->
-	            </div><!--.col-->
-	            <div class="col-xl-6">
-	                <div class="row">
-	                    <div class="col-sm-6">
-	                        <article class="statistic-box red">
-	                            <div>
-	                                <div class="number">26</div>
-	                                <div class="caption"><div>Open tickets</div></div>
-	                                <div class="percent">
-	                                    <div class="arrow up"></div>
-	                                    <p>15%</p>
-	                                </div>
-	                            </div>
-	                        </article>
-	                    </div><!--.col-->
-	                    <div class="col-sm-6">
-	                        <article class="statistic-box purple">
-	                            <div>
-	                                <div class="number">12</div>
-	                                <div class="caption"><div>Closes tickets</div></div>
-	                                <div class="percent">
-	                                    <div class="arrow down"></div>
-	                                    <p>11%</p>
-	                                </div>
-	                            </div>
-	                        </article>
-	                    </div><!--.col-->
-	                    <div class="col-sm-6">
-	                        <article class="statistic-box yellow">
-	                            <div>
-	                                <div class="number">104</div>
-	                                <div class="caption"><div>New clients</div></div>
-	                                <div class="percent">
-	                                    <div class="arrow down"></div>
-	                                    <p>5%</p>
-	                                </div>
-	                            </div>
-	                        </article>
-	                    </div><!--.col-->
-	                    <div class="col-sm-6">
-	                        <article class="statistic-box green">
-	                            <div>
-	                                <div class="number">29</div>
-	                                <div class="caption"><div>Here is an example of a long name</div></div>
-	                                <div class="percent">
-	                                    <div class="arrow up"></div>
-	                                    <p>84%</p>
-	                                </div>
-	                            </div>
-	                        </article>
-	                    </div><!--.col-->
-	                </div><!--.row-->
-	            </div><!--.col-->
-	        </div><!--.row-->
 	
+            <div class="row">
+                <div class="col-xl-12 dahsboard-column">
+	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
+	                    <header class="box-typical-header panel-heading">
+	                        <h3 class="panel-title">Sales details</h3>
+	                    </header>
+	                    <div class="box-typical-body panel-body">
+	                        <table class="tbl-typical">
+	                            <tr>
+                                    <th width="1"><div>#</div></th>
+	                                <th><div>Particulars</div></th>
+                                    <th><div>Customer</div></th>
+                                    <th><div>Billing date</div></th>
+                                    <th><div>User</div></th>
+	                                <th align="center"><div>Quantity</div></th>
+	                                <th align="center"><div>Rate</div></th>
+	                                <th align="center"><div>Total</div></th>
+                                    <th align="center"><div>Credit</div></th>
+	                            </tr>
+	                            <tr>
+                                    <td>1</td>
+	                                <td>
+	                                    <span class="label label-primary">History book</span>
+	                                </td>
+	                                <td>Customer name</td>
+                                    <td>04/08/2018</td>
+                                    <td>Pankaj koirala</td>
+                                    <td align="center">10</td>
+                                    <td align="center">50</td>
+	                                <td align="center">500</td>
+	                                <td align="center">200</td>
+	                            </tr>	                           
+	                        </table>
+	                    </div><!--.box-typical-body-->
+	                </section><!--.box-typical-dashboard-->
+	            </div><!--.col-->
+            </div>
+
 	        <div class="row">
 	            <div class="col-xl-6 dahsboard-column">
 	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
@@ -423,15 +348,19 @@
 	                    <div class="box-typical-body panel-body">
 	                        <table class="tbl-typical">
 	                            <tr>
-	                                <th><div>Status</div></th>
-	                                <th><div>Clients</div></th>
-	                                <th align="center"><div>Orders#</div></th>
-	                                <th align="center"><div>Date</div></th>
+                                    <th width="1"><div>#</div></th>
+	                                <th><div>Particulars</div></th>
+                                    <th><div>Customer</div></th>
+                                    <th><div>Billing date</div></th>
+                                    <th><div>User</div></th>
+	                                <th align="center"><div>Quantity</div></th>
+	                                <th align="center"><div>Rate</div></th>
+	                                <th align="center"><div>Total</div></th>
+                                    <th><div>Credit</div></th>
 	                            </tr>
 	                            <tr>
 	                                <td>
 	                                    <span class="label label-primary">Paid</span>
-	                                    <span class="label label-success">Active</span>
 	                                </td>
 	                                <td>John Doe</td>
 	                                <td align="center">3435362</td>
@@ -786,67 +715,169 @@
                         <h4 class="modal-title" id="myModalLabel">Sale</h4>
                     </div>
                     <div class="modal-upload">
-                        <div class="modal-upload-cont">
-                        
+                        <div class="modal-upload-cont">                      
                             <section class="card" style="margin: 10px 20px 10px 20px;">
 							    <div class="card-block" style="margin:2px;">
-								    <form id="form-signup_v1" name="form-signup_v1" method="POST">
+
+								    <form id="saleItemForm" name="saleItemForm" method="POST">
 
 									    <div class="row">
-										    <div class="col-md-6">                                     
-			                                    <div class="form-group">
-			                                        <label class="form-label" for="itemCode">Item Code</label>
-			                                        <div class="form-control-wrapper">
-			                                            <input id="itemCode" 
-			                                                class="form-control" 
-			                                                name="[Item code]"
-			                                                placeholder="COP125" 
-			                                                type="text" 
-			                                                data-validation="[L>0]"
-													        data-validation-message="$ cannot be empty."/>
-			                                        </div>
-			                                    </div>                                        
-			                                </div>
-			                                <div class="col-md-6">                                     
-			                                    <div class="form-group">
-			                                        <label class="form-label" for="quantity">Quantity</label>
-			                                        <div class="form-control-wrapper">
-			                                            <input id="quantity" 
-			                                                class="form-control" 
-			                                                name="[Quantity]"
-			                                                placeholder="COP125" 
-			                                                type="number" 
-			                                                data-validation="[L>0]"
-													        data-validation-message="$ cannot be empty."/>
-			                                        </div>
-			                                    </div>                                        
-			                                </div>
-									    </div>	
-									    <div class="row">
-									    	<div class="col-md-12">
-                                                <label class="form-label" for="customerName">Customer</label>
-                                                <select class="select2-arrow" id="customerName">
-                                                    <option>Select name of the customer.</option>
-			                                        <asp:PlaceHolder ID="UserIdPlaceholder" runat="server"></asp:PlaceHolder>
-			                                        <option>Pankaj Koirala</option>
-			                                        <option>Sachin Singh</option>
-			                                        <option>Kalash Manandhar</option>
-			                                        <option>Arpan Kafle</option>
-                                                </select>
-                                                <br />
-                                                <br />
+
+										    <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">Product code</label>
+									                <div class="typeahead-container">
+										                <div class="typeahead-field">
+									                        <span class="typeahead-query">
+										                        <input id="productCode"
+											                           class="form-control"
+											                           name="Product code"
+											                           type="search"
+											                           autocomplete="off"
+                                                                       data-validation="[NOTEMPTY]"
+                                                                       data-validation-message=" $ cannot be empty"/>
+									                        </span>
+									                    </div>
+                                                    </div>
+                                                </div>
                                             </div>
-									    </div>
-                                       
+
+										    <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="quantity">Quantity</label>
+                                                    <div class="form-control-wrapper">
+                                                        <div class="form-group">
+							                                <input id="quantity" type="text" value="1" name="quantity"
+                                                            data-validation="[NOTEMPTY]"
+                                                            data-validation-message=" Quantity cannot be empty"/>
+						                                </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+									    </div>	
+                                        
+                                        <div class="row">
+                                            
+										    <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="customerName">Customer name</label>
+                                                    <div class="form-control-wrapper">
+                                                        <select class="select2-arrow form-control" id="customerName"
+                                                            name="Customer"
+                                                            data-validation="[NOTEMPTY]"
+                                                            data-validation-message="You have to select customer.">
+                                                            <option value="">Select customer.</option>
+                                                            <asp:PlaceHolder ID="CustomerNamePlaceHolder" runat="server"></asp:PlaceHolder>
+                                                            <%--Dynamic Field--%>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="date-mask-input">Billing date</label>
+                                                    <div class="form-control-wrapper">
+								                        <input type="text" class="form-control" id="date-mask-input"
+                                                            name="Date"
+                                                            data-validation="[NOTEMPTY]"
+                                                            data-validation-message=" $ cannot be empty"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+									    </div>	
+
+                                         <div class="row">
+                                            
+										    <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="rate">Rate (RS.)</label>
+                                                    <div class="form-control-wrapper">
+                                                        <input id="rate" 
+                                                            class="form-control"
+                                                            placeholder="Rs. 0" 
+                                                            name="number"
+                                                            data-validation="[NOTEMPTY]"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="total">Total bill amount (RS.)</label>
+                                                    <div class="form-control-wrapper">
+                                                        <input id="total" 
+                                                            disabled="true"
+                                                            class="form-control"
+                                                            placeholder="Rs. 0" />
+                                                    </div>
+                                                </div>
+                                            </div>     
+                                             
+									    </div>	
+
+                                         <div class="row">
+                                            
+										    <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="amountReceived">Amount received (RS.)</label>
+                                                    <div class="form-control-wrapper">
+                                                        <input id="amountReceived" 
+                                                            class="form-control"
+                                                            placeholder="Rs. 0" 
+                                                            type="text"
+                                                            name="number"
+                                                            data-validation="[NOTEMPTY]"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="credit">Credit (RS)</label>
+                                                    <div class="form-control-wrapper">
+                                                        <input id="credit" 
+                                                            class="form-control"
+                                                            placeholder="Rs. 0" 
+                                                            disabled="true"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+									    </div>	
+
+                                        <div class="row">
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="userName">User name</label>
+                                                    <div class="form-control-wrapper">
+                                                        <select class="select2-arrow form-control" id="userName"
+                                                            name="User"
+                                                            data-validation="[NOTEMPTY]"
+                                                            data-validation-message="You have to select user.">
+                                                            <option value="">Select user.</option>
+                                                            <asp:PlaceHolder ID="UserNamePlaceHolder" runat="server"></asp:PlaceHolder>
+                                                            <%--Dynamic Field--%>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>	
+
                                         <div class="row" style="margin-top:20px;">
 									        <div class="modal-upload-bottom form-group">
-				                                <button type="submit" class="btn btn-rounded" id="changeEmpDivBtn">Sale</button>
+				                                <button class="btn btn-rounded" type="submit">Sale</button>
 				                            </div><!--.modal-upload-bottom-->
                                         </div>
-								    </form>										
+
+								    </form>		
+                                    
 							    </div>
 						    </section>
-
                         </div><!--.modal-upload-cont-->
                     </div>
 
@@ -881,15 +912,10 @@
 
 	</div><!--.page-content-->
 
-	<script src="js/lib/jquery/jquery.min.js"></script>
+    <script src="js/lib/jquery/jquery.min.js"></script>
 	<script src="js/lib/tether/tether.min.js"></script>
 	<script src="js/lib/bootstrap/bootstrap.min.js"></script>
 	<script src="js/plugins.js"></script>
-
-	<script type="text/javascript" src="js/lib/jqueryui/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="js/lib/lobipanel/lobipanel.min.js"></script>
-	<script type="text/javascript" src="js/lib/match-height/jquery.matchHeight.min.js"></script>
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 	<script src="js/lib/bootstrap-table/bootstrap-table.js"></script>
     <script src="js/lib/bootstrap-table/bootstrap-table-export.min.js"></script>
@@ -906,367 +932,361 @@
     <script src="js/lib/html5-form-validation/jquery.validation.min.js"></script>
     <script src="js/lib/bootstrap-sweetalert/sweetalert.min.js"></script>
 
+    <script src="js/lib/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+    <script src="js/lib/input-mask/jquery.mask.min.js"></script>
+	<script src="js/lib/input-mask/input-mask-init.js"></script>
+
+	<script type="text/javascript" src="js/lib/jqueryui/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/lib/lobipanel/lobipanel.min.js"></script>
+	<script type="text/javascript" src="js/lib/match-height/jquery.matchHeight.min.js"></script>
+
+    <script src="js/lib/typeahead/jquery.typeahead.min.js"></script>
+	<script src="js/lib/typeahead/typeahead-init.js"></script>
+
 	<script>
 
-		$(document).ready(function() {
+         
+        // Form validation
+        $('#saleItemForm').validate({
 
-			$('.panel').lobiPanel({
+            submit: {
+                settings: {
+                    inputContainer: '.form-group',
+                    errorListClass: 'form-tooltip-error'
+                },
+                callback: {
+                    onBeforeSubmit: function (node) {
+                        saleToCustomer();
+                    },
+                    onSubmit: function (node, formData) {
+                        console.log("After Submit");
+                    }
+                }
+            }
+
+        });
+
+
+        // Insert employee record
+        function saleToCustomer() {
+
+            var salesData = JSON.stringify({
+                pCode : $("#productCode").val(),
+                qty : $("#quantity").val(),
+                customer : $("#customerName option:selected").val(),
+                billingDate : $("#date-mask-input").val(),
+                rate: $("#rate").val(),
+                total: $("#total").val(),
+                credit : $("#credit").val(),
+                user : $("#userName option:selected").val()
+            });
+
+            try {
+                $.ajax({
+                    type : "POST",
+                    url : "Index.aspx/SaleProduct",
+                    data : salesData,
+                    contentType : "application/json; charset=utf-8",
+                    dataType : "json",
+                    success : onSuccess,
+                    failure : onFailure
+                });
+
+                function onFailure(AjaxResponse) {
+                    swal({
+                        title: "Error found",
+                        text: AjaxResponse.d,
+                        type: "warning"
+                    });
+                }
+
+                function onSuccess(AjaxResponse) {
+
+                    switch (AjaxResponse.d) {
+                        case "1":
+                            swal({
+                                title: "Inserted!",
+                                text: "Supplier details has been successfully inserted !",
+                                type: "success",
+                                confirmButtonClass: "btn-success",
+                                confirmButtonText: "Done"
+                            });
+                            break;
+                        case "0":
+                            swal({
+                                title: "Failed",
+                                text: "Unknown error :(",
+                                type: "warning"
+                            });
+                            break;
+                        default:
+                            swal({
+                                title: "Error found",
+                                text: AjaxResponse.d,
+                                type: "warning"
+                            });
+                    }
+                        
+                }
+            } catch (exe) {
+                swal({
+                    title: "Error found",
+                    text: exe,
+                    type: "warning"
+                });
+            }
+
+        }  
+
+
+        $("#btnSaleCircle").click(function () {
+
+             try {
+
+                $.ajax({
+                    type : "POST",
+                    url : "Index.aspx/GetProductCode",
+                    contentType : "application/json; charset=utf-8",
+                    dataType : "json",
+                    success : onSuccess,
+                    failure : onFailure
+                });
+
+                function onFailure(AjaxResponse) {
+                    swal({
+                        title: "Error found",
+                        text: AjaxResponse.d,
+                        type: "warning"
+                    });
+                }
+
+                function onSuccess(AjaxResponse) {
+
+                    var productCodeList = AjaxResponse.d.split(',');
+
+                     $.typeahead({
+                        input: "#productCode",
+                        order: "asc",
+                        minLength: 1,
+                        source: {
+                            data: productCodeList
+                        }
+                    });
+                        
+                }
+            } catch (exe) {
+                swal({
+                    title: "Error found",
+                    text: exe,
+                    type: "warning"
+                });
+            }
+            
+        });
+
+        $('input[name="number"]').bind('keypress', function(e){
+		    var keyCode = (e.which)?e.which:event.keyCode
+		    return !(keyCode>31 && (keyCode<48 || keyCode>57)); 
+	    });
+
+
+        $("#rate").keyup(function (e) {    
+
+            var qty = parseInt($("#quantity").val());
+            var rate = this.value;
+            var total = qty * rate;
+            $("#total").val(total);
+
+        });
+
+        $("#amountReceived").keyup(function (e) {
+
+            var totalBill = parseInt($("#total").val());
+            var amountReceived = this.value;
+            var credit = totalBill - amountReceived;
+            $("#credit").val(credit);
+
+        });
+
+
+        $("input[name='quantity']").TouchSpin();
+
+        // Jquery table editable setting
+        $('#table-edit').Tabledit({
+
+            url: 'Suppliers.aspx',
+			columns: {
+				identifier: [0, 'id'],
+                editable: [[1, 'sName'], [2, 'sContactNo'], [3, 'sEmail'], [4, 'sAddress'], [5, 'sUrl'], [6, 'sPersonalNo']]
+			}
+
+        });
+
+        // Employee details table edited data save button click listener
+        $(".tabledit-save-button").click(function () {
+               
+            var jsonObj = {};
+
+            $(this).closest('tr').find('input').each(function () {
+                var tag = this.getAttribute('name');
+                var val = this.value;
+                jsonObj[tag] = val;
+            });
+
+            var supplierData = JSON.stringify(jsonObj);
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    url: "Suppliers.aspx/UpdateSupplierDetails",
+                    data: supplierData,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: onSuccess,
+                    failure: onFailure
+                });
+
+                function onFailure(AjaxResponse) {
+                    swal({
+                        title: "Error found",
+                        text: AjaxResponse.d,
+                        type: "warning"
+                    });
+                }
+
+                function onSuccess(AjaxResponse) {
+
+                    switch (AjaxResponse.d) {
+                        case "1":
+                            swal({
+                                title: "Updated!",
+                                text: "Supplier details has been successfully updated !",
+                                type: "success",
+                                confirmButtonClass: "btn-success",
+                                confirmButtonText: "Done"
+                            });
+                            break;
+                        case "0":
+                            swal({
+                                title: "Failed",
+                                text: "Unknown error :(",
+                                type: "warning"
+                            });
+                            break;
+                        default:
+                            swal({
+                                title: "Error found",
+                                text: AjaxResponse.d,
+                                type: "warning"
+                            });
+                    }
+                }
+
+            } catch (e) {
+                swal({
+                    title: "Error found",
+                    text: e,
+                    type: "warning"
+                });
+            }
+                        
+        });
+
+        $(".tabledit-confirm-button").click(function (e) {
+            e.preventDefault();
+
+            var data = JSON.stringify({
+                id: $(this).closest('tr').children('td:first').text()
+            });
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    url: "Suppliers.aspx/DeleteRecord",
+                    data: data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: onSuccess,
+                    failure: onFailure
+                });
+
+                function onFailure(AjaxResponse) {
+                    swal({
+                        title: "Error found",
+                        text: AjaxResponse.d,
+                        type: "warning"
+                    });
+                }
+
+                function onSuccess(AjaxResponse) {
+
+                    switch (AjaxResponse.d) {
+                        case "1":
+                            swal({
+                                title: "Deleted!",
+                                text: "Supplier record has been successfully deleted !",
+                                type: "success",
+                                confirmButtonClass: "btn-success",
+                                confirmButtonText: "Done"
+                            });
+                            break;
+                        case "0":
+                            swal({
+                                title: "Failed",
+                                text: "Unknown error :(",
+                                type: "warning"
+                            });
+                            break;
+                        default:
+                            swal({
+                                title: "Error found",
+                                text: AjaxResponse.d,
+                                type: "warning"
+                            });
+                    }
+
+                }
+            } catch (exe) {
+                swal({
+                    title: "Error found",
+                    text: exe,
+                    type: "warning"
+                });
+            }
+        });
+
+        //Add supplier button click listener
+        $(".customRoundedBtn").click(function () {
+            $(".divForm").removeClass("hidden");
+            $(".customRoundedBtn").addClass("hidden");
+            $("#table-edit").addClass("hidden");
+
+        });
+
+        // Cancle button click listener
+        $(".cancleBtn").click(function () {
+
+            $(".divForm").addClass("hidden");
+            $(".customRoundedBtn").removeClass("hidden");
+            $("#table-edit").removeClass("hidden");
+            document.getElementById("insertSuppliersForm").reset();
+
+        });
+        
+
+
+        $(function () {
+
+            $('.panel').lobiPanel({
 				sortable: true
 			});
 			$('.panel').on('dragged.lobiPanel', function(ev, lobiPanel){
 				$('.dahsboard-column').matchHeight();
-			});
-
-			google.charts.load('current', {'packages':['corechart']});
-			google.charts.setOnLoadCallback(drawChart);
-			function drawChart() {
-				var dataTable = new google.visualization.DataTable();
-				dataTable.addColumn('string', 'Day');
-				dataTable.addColumn('number', 'Values');
-				// A column for custom tooltip content
-				dataTable.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});
-				dataTable.addRows([
-					['MON',  130, ' '],
-					['TUE',  130, '130'],
-					['WED',  180, '180'],
-					['THU',  175, '175'],
-					['FRI',  200, '200'],
-					['SAT',  170, '170'],
-					['SUN',  250, '250'],
-					['MON',  220, '220'],
-					['TUE',  220, ' ']
-				]);
-
-				var options = {
-					height: 314,
-					legend: 'none',
-					areaOpacity: 0.18,
-					axisTitlesPosition: 'out',
-					hAxis: {
-						title: '',
-						textStyle: {
-							color: '#fff',
-							fontName: 'Proxima Nova',
-							fontSize: 11,
-							bold: true,
-							italic: false
-						},
-						textPosition: 'out'
-					},
-					vAxis: {
-						minValue: 0,
-						textPosition: 'out',
-						textStyle: {
-							color: '#fff',
-							fontName: 'Proxima Nova',
-							fontSize: 11,
-							bold: true,
-							italic: false
-						},
-						baselineColor: '#16b4fc',
-						ticks: [0,25,50,75,100,125,150,175,200,225,250,275,300,325,350],
-						gridlines: {
-							color: '#1ba0fc',
-							count: 15
-						},
-					},
-					lineWidth: 2,
-					colors: ['#fff'],
-					curveType: 'function',
-					pointSize: 5,
-					pointShapeType: 'circle',
-					pointFillColor: '#f00',
-					backgroundColor: {
-						fill: '#008ffb',
-						strokeWidth: 0,
-					},
-					chartArea:{
-						left:0,
-						top:0,
-						width:'100%',
-						height:'100%'
-					},
-					fontSize: 11,
-					fontName: 'Proxima Nova',
-					tooltip: {
-						trigger: 'selection',
-						isHtml: true
-					}
-				};
-
-				var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-				chart.draw(dataTable, options);
-			}
-			$(window).resize(function(){
-				drawChart();
-				setTimeout(function(){
-				}, 1000);
-			});
-		});
-
-
-		$(function () {
-
-            // Jquery table editable setting
-            $('#table-edit').Tabledit({
-
-                url: 'Suppliers.aspx',
-			    columns: {
-				    identifier: [0, 'id'],
-                    editable: [[1, 'sName'], [2, 'sContactNo'], [3, 'sEmail'], [4, 'sAddress'], [5, 'sUrl'], [6, 'sPersonalNo']]
-			    }
-
             });
 
-            // Employee details table edited data save button click listener
-            $(".tabledit-save-button").click(function () {
-               
-                var jsonObj = {};
-
-                $(this).closest('tr').find('input').each(function () {
-                    var tag = this.getAttribute('name');
-                    var val = this.value;
-                    jsonObj[tag] = val;
-                });
-
-                var supplierData = JSON.stringify(jsonObj);
-
-                try {
-                    $.ajax({
-                        type: "POST",
-                        url: "Suppliers.aspx/UpdateSupplierDetails",
-                        data: supplierData,
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: onSuccess,
-                        failure: onFailure
-                    });
-
-                    function onFailure(AjaxResponse) {
-                        swal({
-                            title: "Error found",
-                            text: AjaxResponse.d,
-                            type: "warning"
-                        });
-                    }
-
-                    function onSuccess(AjaxResponse) {
-
-                        switch (AjaxResponse.d) {
-                            case "1":
-                                swal({
-                                    title: "Updated!",
-                                    text: "Supplier details has been successfully updated !",
-                                    type: "success",
-                                    confirmButtonClass: "btn-success",
-                                    confirmButtonText: "Done"
-                                });
-                                break;
-                            case "0":
-                                swal({
-                                    title: "Failed",
-                                    text: "Unknown error :(",
-                                    type: "warning"
-                                });
-                                break;
-                            default:
-                                swal({
-                                    title: "Error found",
-                                    text: AjaxResponse.d,
-                                    type: "warning"
-                                });
-                        }
-                    }
-
-                } catch (e) {
-                    swal({
-                        title: "Error found",
-                        text: e,
-                        type: "warning"
-                    });
-                }
-                        
-            });
-
-            $(".tabledit-confirm-button").click(function (e) {
-                e.preventDefault();
-
-                var data = JSON.stringify({
-                    id: $(this).closest('tr').children('td:first').text()
-                });
-
-                try {
-                    $.ajax({
-                        type: "POST",
-                        url: "Suppliers.aspx/DeleteRecord",
-                        data: data,
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: onSuccess,
-                        failure: onFailure
-                    });
-
-                    function onFailure(AjaxResponse) {
-                        swal({
-                            title: "Error found",
-                            text: AjaxResponse.d,
-                            type: "warning"
-                        });
-                    }
-
-                    function onSuccess(AjaxResponse) {
-
-                        switch (AjaxResponse.d) {
-                            case "1":
-                                swal({
-                                    title: "Deleted!",
-                                    text: "Supplier record has been successfully deleted !",
-                                    type: "success",
-                                    confirmButtonClass: "btn-success",
-                                    confirmButtonText: "Done"
-                                });
-                                break;
-                            case "0":
-                                swal({
-                                    title: "Failed",
-                                    text: "Unknown error :(",
-                                    type: "warning"
-                                });
-                                break;
-                            default:
-                                swal({
-                                    title: "Error found",
-                                    text: AjaxResponse.d,
-                                    type: "warning"
-                                });
-                        }
-
-                    }
-                } catch (exe) {
-                    swal({
-                        title: "Error found",
-                        text: exe,
-                        type: "warning"
-                    });
-                }
-            });
-
-            //Add supplier button click listener
-            $(".customRoundedBtn").click(function () {
-                $(".divForm").removeClass("hidden");
-                $(".customRoundedBtn").addClass("hidden");
-                $("#table-edit").addClass("hidden");
-
-            });
-
-            // Cancle button click listener
-            $(".cancleBtn").click(function () {
-
-                $(".divForm").addClass("hidden");
-                $(".customRoundedBtn").removeClass("hidden");
-                $("#table-edit").removeClass("hidden");
-                document.getElementById("insertSuppliersForm").reset();
-
-            });
-
-            // Form validation
-            $('#insertSuppliersForm').validate({
-
-                submit: {
-                    settings: {
-                        inputContainer: '.form-group',
-                        errorListClass: 'form-tooltip-error'
-                    },
-                    callback: {
-                        onBeforeSubmit: function (node) {
-                            insertData();
-                        },
-                        onSubmit: function (node, formData) {
-                            console.log("After Submit");
-                        }
-                    }
-                }
-
-            });
-
-            // Insert employee record
-            function insertData() {
-
-                var managerId;
-                if ($("#mId").prop("selectedIndex") == 0) {
-                    managerId = null;
-                } else {
-                    managerId = $("#mId option:selected").val();
-                }
-
-                var supplierData = JSON.stringify({
-                    sName : $("#sName").val(),
-                    sContactNo : $("#sContactNo").val(),
-                    sEmail : $("#sEmail").val(),
-                    sAddress : $("#sAddress").val(),
-                    sUrl : $("#sUrl").val(),
-                    sPersonalNo : $("#sPersonalNo").val(),
-                    userName : $("#userName option:selected").val()
-                });
-
-                try {
-                    $.ajax({
-                        type : "POST",
-                        url : "Suppliers.aspx/InsertSupplierDetails",
-                        data : supplierData,
-                        contentType : "application/json; charset=utf-8",
-                        dataType : "json",
-                        success : onSuccess,
-                        failure : onFailure
-                    });
-
-                    function onFailure(AjaxResponse) {
-                        swal({
-                            title: "Error found",
-                            text: AjaxResponse.d,
-                            type: "warning"
-                        });
-                    }
-
-                    function onSuccess(AjaxResponse) {
-
-                        switch (AjaxResponse.d) {
-                            case "1":
-                                swal({
-                                    title: "Inserted!",
-                                    text: "Supplier details has been successfully inserted !",
-                                    type: "success",
-                                    confirmButtonClass: "btn-success",
-                                    confirmButtonText: "Done"
-                                });
-                                break;
-                            case "0":
-                                swal({
-                                    title: "Failed",
-                                    text: "Unknown error :(",
-                                    type: "warning"
-                                });
-                                break;
-                            default:
-                                swal({
-                                    title: "Error found",
-                                    text: AjaxResponse.d,
-                                    type: "warning"
-                                });
-                        }
-                        
-                    }
-                } catch (exe) {
-                    swal({
-                        title: "Error found",
-                        text: exe,
-                        type: "warning"
-                    });
-                }
-
-            }   
-
+           
         });
+
 
 	</script>
 

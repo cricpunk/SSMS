@@ -16,11 +16,6 @@
 	<link href="img/favicon.png" rel="icon" type="image/png"/>
 	<link href="img/favicon.ico" rel="shortcut icon"/>
 
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<![endif]-->
 	<link rel="stylesheet" href="css/lib/lobipanel/lobipanel.min.css"/>
 	<link rel="stylesheet" href="css/separate/vendor/lobipanel.min.css"/>
 	<link rel="stylesheet" href="css/lib/jqueryui/jquery-ui.min.css"/>
@@ -38,7 +33,7 @@
     <link rel="stylesheet" href="css/lib/bootstrap-sweetalert/sweetalert.css"/>
     <link rel="stylesheet" href="css/separate/vendor/sweet-alert-animations.min.css"/>
 
-    <link rel="stylesheet" href="css/separate/vendor/bootstrap-touchspin.min.css">
+    <link rel="stylesheet" href="css/separate/vendor/bootstrap-touchspin.min.css"/>
 
     <style type="text/css">
 
@@ -578,7 +573,7 @@
 
                                         <div class="row" style="margin-top:20px;">
 									        <div class="modal-upload-bottom form-group">
-				                                <button class="btn btn-rounded" id="btnAddToStock" type="submit">Add</button>
+				                                <button class="btn btn-rounded" type="submit">Add</button>
 				                            </div><!--.modal-upload-bottom-->
                                         </div>
 

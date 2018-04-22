@@ -13,12 +13,21 @@ namespace SSMS {
     public partial class Index {
         
         /// <summary>
-        /// UserIdPlaceholder control.
+        /// CustomerNamePlaceHolder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder UserIdPlaceholder;
+        protected global::System.Web.UI.WebControls.PlaceHolder CustomerNamePlaceHolder;
+        
+        /// <summary>
+        /// UserNamePlaceHolder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder UserNamePlaceHolder;
     }
 }
