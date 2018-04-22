@@ -13,13 +13,13 @@ namespace SSMS {
     public partial class Stock {
         
         /// <summary>
-        /// TablePlaceHolder control.
+        /// StockTablePlaceHolder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder TablePlaceHolder;
+        protected global::System.Web.UI.WebControls.PlaceHolder StockTablePlaceHolder;
         
         /// <summary>
         /// UserIdPlaceholder control.
@@ -58,21 +58,21 @@ namespace SSMS {
         protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolder3;
         
         /// <summary>
-        /// EmployeeListPlaceholder control.
+        /// ProductPlaceHolder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder EmployeeListPlaceholder;
+        protected global::System.Web.UI.WebControls.PlaceHolder ProductPlaceHolder;
         
         /// <summary>
-        /// DivIdOptionPlaceholderModal control.
+        /// UserNamePlaceHolder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder DivIdOptionPlaceholderModal;
+        protected global::System.Web.UI.WebControls.PlaceHolder UserNamePlaceHolder;
     }
 }

@@ -439,55 +439,51 @@
                         <h4 class="modal-title" id="myModalLabel">Add items category</h4>
                     </div>
                     <div class="modal-upload">
-                        <div class="modal-upload-cont">
-                        
+                        <div class="modal-upload-cont">                  
                             <section class="card" style="margin: 10px 20px 10px 20px;">
 							    <div class="card-block" style="margin:2px;">
-								    <form id="form-signup_v1" name="form-signup_v1" method="POST">
+
+								    <form id="categoryInsertForm" name="form-signup_v1" method="POST">
 
 									    <div class="row">
 										    <div class="col-md-12">
-                                                <fieldset class="form-group">
-										            <label class="form-label" for="categoryName">Category</label>
-										            <input type="text" class="form-control" id="categoryName"/>
-									            </fieldset>
-                                            </div>
-										    
-									    </div>	
-                                        <div class="row">
-									    	<div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label class="form-label" for="customerName">Customer</label>
+										            <label class="form-label" for="categoryName">Category</label>
                                                     <div class="form-control-wrapper">
-                                                        <select class="select2-arrow" id="customerName">
-                                                        <option>Select name of the customer.</option>
-			                                            <asp:PlaceHolder ID="UserIdPlaceholder" runat="server"></asp:PlaceHolder>
-			                                            <option>Pankaj Koirala</option>
-			                                            <option>Sachin Singh</option>
-			                                            <option>Kalash Manandhar</option>
-			                                            <option>Arpan Kafle</option>
-                                                    </select>                                      
+										                <input type="text"
+                                                            class="form-control" 
+                                                            id="categoryName"
+                                                            name="Category name"
+                                                            data-validation="[NOTEMPTY]"
+                                                            data-validation-message="$ cannot be empty."/>
                                                     </div>
-                                                </div>
-                                            </div>
-									    </div>
+									            </div>
+                                            </div>									    
+									    </div>	                         
                                         <div class="row">
                                             <div class="col-md-12"> 
-                                                <label class="form-label" for="categoryDesc">Category description</label>
-                                                <textarea rows="4" class="form-control" placeholder="Category description ..........." id="categoryDesc"></textarea>                                                   
+                                                <div class="form-group">
+                                                    <label class="form-label" for="categoryDesc">Category description</label>
+                                                    <div class="form-control-wrapper">
+                                                        <textarea rows="4" class="form-control" placeholder="Category description ..........." id="categoryDesc"
+                                                            name="Category description"
+                                                            data-validation="[NOTEMPTY]"
+                                                            data-validation-message="$ cannot be empty."></textarea> 
+                                                    </div>
+                                                </div>
 						                    </div>
                                         </div>
                                         <%--<hr style="margin-bottom: 15px;"/>--%>
                                         
                                         <div class="row" style="margin-top:-40px;">
 									        <div class="modal-upload-bottom form-group">
-				                                <button type="button" class="btn btn-rounded" id="btnAddCategory">Add</button>
+				                                <button class="btn btn-rounded" id="btnAddCategory"  type="submit">Add</button>
 				                            </div><!--.modal-upload-bottom-->
                                         </div>
-								    </form>										
+								    </form>			
+                                    
 							    </div>
 						    </section>
-
                         </div><!--.modal-upload-cont-->
                     </div>
 
@@ -563,65 +559,7 @@
             $("#btnAddCategory").click(function (e) {
                 e.preventDefault();
 
-                var category = JSON.stringify({
-                    category: $("#categoryName").val(),
-                    description: $("#categoryDesc").val()
-                });
-
-                try {
-                    $.ajax({
-                        type: "POST",
-                        url: "Items.aspx/InsertCategory",
-                        data: category,
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: onSuccess,
-                        failure: onFailure
-                    });
-
-                    function onFailure(AjaxResponse) {
-                        swal({
-                            title: "Error found",
-                            text: AjaxResponse.d,
-                            type: "warning"
-                        });
-                    }
-
-                    function onSuccess(AjaxResponse) {
-
-                        switch (AjaxResponse.d) {
-                            case "1":
-                                swal({
-                                    title: "Inserted!",
-                                    text: "Category has been successfully inserted !",
-                                    type: "success",
-                                    confirmButtonClass: "btn-success",
-                                    confirmButtonText: "Done"
-                                });
-                                break;
-                            case "0":
-                                swal({
-                                    title: "Failed",
-                                    text: "Unknown error :(",
-                                    type: "warning"
-                                });
-                                break;
-                            default:
-                                swal({
-                                    title: "Error found",
-                                    text: AjaxResponse.d,
-                                    type: "warning"
-                                });
-                        }
-
-                    }
-                } catch (exe) {
-                    swal({
-                        title: "Error found",
-                        text: exe,
-                        type: "warning"
-                    });
-                }
+                
                
             });
 
@@ -820,7 +758,7 @@
 
             });
 
-            // Form validation
+            // Form validation for inserting items
             $('#insertItemsForm').validate({
 
                 submit: {
@@ -831,6 +769,26 @@
                     callback: {
                         onBeforeSubmit: function (node) {
                             insertData();
+                        },
+                        onSubmit: function (node, formData) {
+                            console.log("After Submit");
+                        }
+                    }
+                }
+
+            });
+
+            // Form validation for inserting category
+            $('#categoryInsertForm').validate({
+
+                submit: {
+                    settings: {
+                        inputContainer: '.form-group',
+                        errorListClass: 'form-tooltip-error'
+                    },
+                    callback: {
+                        onBeforeSubmit: function (node) {
+                            insertCategory();
                         },
                         onSubmit: function (node, formData) {
                             console.log("After Submit");
@@ -917,6 +875,71 @@
                 }
 
             }   
+
+            function insertCategory() {
+
+                var category = JSON.stringify({
+                    category: $("#categoryName").val(),
+                    description: $("#categoryDesc").val()
+                });
+
+                try {
+                    $.ajax({
+                        type: "POST",
+                        url: "Items.aspx/InsertCategory",
+                        data: category,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: onSuccess,
+                        failure: onFailure
+                    });
+
+                    function onFailure(AjaxResponse) {
+                        swal({
+                            title: "Error found",
+                            text: AjaxResponse.d,
+                            type: "warning"
+                        });
+                    }
+
+                    function onSuccess(AjaxResponse) {
+
+                        switch (AjaxResponse.d) {
+                            case "1":
+                                swal({
+                                    title: "Inserted!",
+                                    text: "Category has been successfully inserted !",
+                                    type: "success",
+                                    confirmButtonClass: "btn-success",
+                                    confirmButtonText: "Done"
+                                });
+                                break;
+                            case "0":
+                                swal({
+                                    title: "Failed",
+                                    text: "Unknown error :(",
+                                    type: "warning"
+                                });
+                                break;
+                            default:
+                                swal({
+                                    title: "Error found",
+                                    text: AjaxResponse.d,
+                                    type: "warning"
+                                });
+                        }
+
+                    }
+                } catch (exe) {
+                    swal({
+                        title: "Error found",
+                        text: exe,
+                        type: "warning"
+                    });
+                }
+
+            }
+
 
         });
 

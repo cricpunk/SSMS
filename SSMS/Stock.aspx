@@ -38,6 +38,8 @@
     <link rel="stylesheet" href="css/lib/bootstrap-sweetalert/sweetalert.css"/>
     <link rel="stylesheet" href="css/separate/vendor/sweet-alert-animations.min.css"/>
 
+    <link rel="stylesheet" href="css/separate/vendor/bootstrap-touchspin.min.css">
+
     <style type="text/css">
 
     	.gallery-col {
@@ -240,6 +242,9 @@
 				</div>
 			</article>
 		</div><!--.gallery-col-->
+        <button class="btn btn-primary submitBtn swal-btn-success" type="button" data-toggle="modal" id="btnAddToStock" data-target="#addItemToStockModal" 
+            style="margin: 0 30px 30px 0 !important;right: 0px !important;position: absolute;">Add item to stock 
+        </button>
 
 	    <div class="container-fluid">
 
@@ -253,114 +258,14 @@
 					        <tr>
 						        <th width="1">#</th>
 						        <th>Item Name</th>
-						        <th>Item Code</th>
-						        <th>Purchase Date</th>
-						        <th>Arrived Date</th>
 						        <th>Arrived Quantity</th>
 						        <th>Stock Quantity</th>
-						        <th>Category</th>				        
-		                        <th>Supplier</th>
-		                        <th>Managed By</th>
+						        <th>Arrived Date</th>
 					        </tr>
 					    </thead>
 					    <tbody>
-		                    <asp:PlaceHolder ID="TablePlaceHolder" runat="server"></asp:PlaceHolder>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
+		                    <asp:PlaceHolder ID="StockTablePlaceHolder" runat="server"></asp:PlaceHolder>
+                            <%--Dynamic content--%>
 					    </tbody>
 				    </table>
 			    </section>
@@ -671,75 +576,94 @@
 	    </div><!--.container-fluid-->
 
 	  	<!-- modal -->
-	    <div class="modal fade" id="editDivisionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	    <div class="modal fade" id="addItemToStockModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #00a8ff; color: #fff">
                         <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
                             <i class="font-icon-close-2"></i>
                         </button>
-                        <h4 class="modal-title" id="myModalLabel">Change employee division &amp; Position</h4>
+                        <h4 class="modal-title" id="myModalLabel">Add product to stock</h4>
                     </div>
                     <div class="modal-upload">
-                        <div class="modal-upload-cont">
-                        
+                        <div class="modal-upload-cont">                      
                             <section class="card" style="margin: 10px 20px 10px 20px;">
 							    <div class="card-block" style="margin:2px;">
-								    <form id="form-signup_v1" name="form-signup_v1" method="POST">
+
+								    <form id="addProductToStockForm" name="form-signup_v1" method="POST">
 
 									    <div class="row">
+
 										    <div class="col-md-6">
-                                                <label class="form-label" for="employeeName" >Employee Name</label>
-                                                <select class="select2-arrow form-control" data-size="5" id="employeeName">
-                                                    <asp:PlaceHolder ID="EmployeeListPlaceholder" runat="server"></asp:PlaceHolder>
-                                                    <%--Dynamic Field--%>
-                                                </select>
+                                                <div class="form-group">
+                                                    <label class="form-label" for="productName">Product name</label>
+                                                    <div class="form-control-wrapper">
+                                                        <select class="select2-arrow form-control" id="productName"
+                                                            name="Product"
+                                                            data-validation="[NOTEMPTY]"
+                                                            data-validation-message="You have to select product.">
+                                                            <option value="">Select product.</option>
+                                                            <asp:PlaceHolder ID="ProductPlaceHolder" runat="server"></asp:PlaceHolder>
+                                                            <%--Dynamic Field--%>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+										    <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="productName">Quantity</label>
+                                                    <div class="form-control-wrapper">
+                                                        <div class="form-group">
+							                                <input id="quantity" type="text" value="1" name="quantity"
+                                                            data-validation="[NOTEMPTY]"
+                                                            data-validation-message=" Quantity cannot be empty"/>
+						                                </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+									    </div>	
+                                        
+                                        <div class="row">
+										    <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="date-mask-input">Date</label>
+                                                    <div class="form-control-wrapper">
+								                        <input type="text" class="form-control" id="date-mask-input"
+                                                            name="Date"
+                                                            data-validation="[NOTEMPTY]"
+                                                            data-validation-message=" $ cannot be empty"/>
+                                                    </div>
+                                                </div>
                                             </div>
 										    <div class="col-md-6">
-                                                <label class="form-label" for="divIdModal">Division</label>
-                                                <select class="select2-arrow" id="divIdModal">
-                                                    <asp:PlaceHolder ID="DivIdOptionPlaceholderModal" runat="server"></asp:PlaceHolder>
-                                                    <%--Dynamic field--%>
-                                                </select>
-                                                <br />
-                                                <br />
+                                                <div class="form-group">
+                                                    <label class="form-label" for="userName">User name</label>
+                                                    <div class="form-control-wrapper">
+                                                        <select class="select2-arrow form-control" id="userName"
+                                                            name="User"
+                                                            data-validation="[NOTEMPTY]"
+                                                            data-validation-message="You have to select user.">
+                                                            <option value="">Select user.</option>
+                                                            <asp:PlaceHolder ID="UserNamePlaceHolder" runat="server"></asp:PlaceHolder>
+                                                            <%--Dynamic Field--%>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
 									    </div>	
 
-                                        <div class="row">
-                                            <div class="checkbox-bird col-md-12">
-							                    <input type="checkbox" id="checkBox"/>
-							                    <label for="checkBox"> 
-                                                    Selection will make him/her manager of the selected division by removing old one. Unselect will just transfer his/her division. 
-                                                    If transfeering employee is already a manager then his/her position will be removed as well.
-							                    </label>
-						                    </div>
-                                        </div>
-                                        <%--<hr style="margin-bottom: 15px;"/>--%>
-
-                                        <%--<div class="row hidden" id="transferManagerDiv">
-										    <div class="col-md-6">
-                                                <label style="padding: 0px 0px 0px 25px;"> Transfeering employee is a manager, appoint new manager for that division. </label>
-                                            </div>
-										    <div class="col-md-6">
-                                                <label class="form-label" for="newManagerCandidate">Employee Name</label>
-                                                <select class="select2-arrow" id="newManagerCandidate">
-                                                    <asp:PlaceHolder ID="NewManagerCandidatePlaceholder" runat="server"></asp:PlaceHolder>
-                                                    
-                                                </select>
-                                                <br />
-                                            </div>
-									    </div>--%>
-                                        
                                         <div class="row" style="margin-top:20px;">
 									        <div class="modal-upload-bottom form-group">
-				                                <button type="submit" class="btn btn-rounded" id="changeEmpDivBtn">Done</button>
+				                                <button class="btn btn-rounded" id="btnAddToStock" type="submit">Add</button>
 				                            </div><!--.modal-upload-bottom-->
                                         </div>
-								    </form>										
+
+								    </form>		
+                                    
 							    </div>
 						    </section>
-
                         </div><!--.modal-upload-cont-->
                     </div>
 
@@ -794,8 +718,14 @@
     <script src="js/lib/html5-form-validation/jquery.validation.min.js"></script>
     <script src="js/lib/bootstrap-sweetalert/sweetalert.min.js"></script>
 
+    <script src="js/lib/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+    <script src="js/lib/input-mask/jquery.mask.min.js"></script>
+	<script src="js/lib/input-mask/input-mask-init.js"></script>
+
     <script>
-    	$(function () {
+        $(function () {
+
+            $("input[name='quantity']").TouchSpin();
 
             // Jquery table editable setting
             $('#table-edit').Tabledit({
@@ -960,7 +890,7 @@
             });
 
             // Form validation
-            $('#insertCustomersForm').validate({
+            $('#addProductToStockForm').validate({
 
                 submit: {
                     settings: {
@@ -969,7 +899,7 @@
                     },
                     callback: {
                         onBeforeSubmit: function (node) {
-                            insertData();
+                            insertIntoStock();
                         },
                         onSubmit: function (node, formData) {
                             console.log("After Submit");
@@ -979,28 +909,65 @@
 
             });
 
-            // Insert employee record
-            function insertData() {
+            // To get product details and user details
+            $("#btnAddToStock").click(function () {
 
-                var managerId;
-                if ($("#mId").prop("selectedIndex") == 0) {
-                    managerId = null;
-                } else {
-                    managerId = $("#mId option:selected").val();
+                try {
+                    $.ajax({
+                        type: "POST",
+                        url: "Stock.aspx/GetProductAndUser",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: onSuccess,
+                        failure: onFailure
+                    });
+
+                    function onFailure(AjaxResponse) {
+                        swal({
+                            title: "Error found",
+                            text: AjaxResponse.d,
+                            type: "warning"
+                        });
+                    }
+
+                    function onSuccess(AjaxResponse) {
+
+                        // Response of ajax will be in <option>##<option>##<option> format and we need to split those three by ##
+                        // Once splited we will append options into select tag
+                        var optionArray = AjaxResponse.d.split('##');
+
+                        // Before appending options dont forget to clear select otherwise item will be repeated
+                        $("#productName").children('option:not(:first)').remove();
+                        $("#userName").children('option:not(:first)').remove();
+                        $("#productName").append(optionArray[0]);
+                        $("#userName").append(optionArray[1]);
+
+                    }
+
+                } catch (exe) {
+                    swal({
+                        title: "Error found",
+                        text: exe,
+                        type: "warning"
+                    });
                 }
 
+            });
+
+            // Insert product into stock
+            function insertIntoStock() {
+
                 var supplierData = JSON.stringify({
-                    cName : $("#cName").val(),
-                    cContactNo : $("#cContactNo").val(),
-                    cEmail : $("#cEmail").val(),
-                    cAddress : $("#cAddress").val(),
-                    userName : $("#userName option:selected").val()
+                    pId : $("#productName option:selected").val(),
+                    quantity : $("#quantity").val(),
+                    arrivedDate : $("#date-mask-input").val(),
+                    uId : $("#userName option:selected").val()
                 });
 
                 try {
                     $.ajax({
                         type : "POST",
-                        url : "Customers.aspx/InsertCustomerDetails",
+                        url : "Stock.aspx/InsertIntoStock",
                         data : supplierData,
                         contentType : "application/json; charset=utf-8",
                         dataType : "json",
@@ -1022,7 +989,7 @@
                             case "1":
                                 swal({
                                     title: "Inserted!",
-                                    text: "Customer details has been successfully inserted !",
+                                    text: "Product has been successfully added to stock !",
                                     type: "success",
                                     confirmButtonClass: "btn-success",
                                     confirmButtonText: "Done"

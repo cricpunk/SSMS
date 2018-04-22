@@ -151,7 +151,7 @@ namespace SSMS {
                 connection.Open();
 
 
-                // For the purpose of primary key auto increment 
+                // For the purpose of product details primary key auto increment 
                 int itemId = 0;
                 SqlCommand cmdItemId = new SqlCommand {
                     Connection = connection,
@@ -167,13 +167,32 @@ namespace SSMS {
                     } else {
                         itemId = Convert.ToInt32(itemIdReader.GetValue(0)) + 1;
                     }
-
                 }
                 // Remember to close reader as soon as it completes its task. This is important. Otherwise it will throw 
                 // "there is already an open datareader associated with this command which must be closed first." error at run time.
                 itemIdReader.Close();
 
-                SqlCommand cmdInsertSupplier = new SqlCommand {
+                // For the purpose of stock primary key auto increment 
+                int stockId = 0;
+                SqlCommand cmdStockId = new SqlCommand {
+                    Connection = connection,
+                    CommandText = "SELECT MAX(stock_id) FROM stock",
+                    CommandType = CommandType.Text
+                };
+
+                SqlDataReader stockIdReader = cmdStockId.ExecuteReader();
+                while (stockIdReader.Read()) {
+
+                    if (stockIdReader.GetValue(0) == DBNull.Value) {
+                        stockId = 1;
+                    } else {
+                        stockId = Convert.ToInt32(stockIdReader.GetValue(0)) + 1;
+                    }
+
+                }
+                stockIdReader.Close();
+
+                SqlCommand cmdInsertItems = new SqlCommand {
                     Connection = connection,
                     CommandText = "INSERT INTO product_details (product_id, item_name, item_code, description, price, purchase_date, category_id, supplier_id, user_id) " +
                     "VALUES (" + itemId + ", '" + iName + "', '" + iCode + "', '" + description + "', '" + price + "', '" + purchaseDate + "', " + Convert.ToInt32(category) +
@@ -181,7 +200,15 @@ namespace SSMS {
                     CommandType = CommandType.Text
                 };
 
-                int count = cmdInsertSupplier.ExecuteNonQuery();
+                SqlCommand cmdInsertIntoStock = new SqlCommand {
+                    Connection = connection,
+                    CommandText = "INSERT INTO stock (stock_id, arrived_quantity, stock_quantity, arrived_date, product_id) " +
+                    "VALUES (" + stockId + ", '" + iName + "', '" + iCode + "', '" + description + "', '" + price + "', '" + purchaseDate + "', " + Convert.ToInt32(category) +
+                    ", " + Convert.ToInt32(supplier) + ", " + Convert.ToInt32(userName) + ")",
+                    CommandType = CommandType.Text
+                };
+
+                int count = cmdInsertItems.ExecuteNonQuery();
 
 
                 connection.Close();
