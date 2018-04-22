@@ -78,7 +78,7 @@
   	</style>
 </head>
 
-<body class="with-side-menu-compact dark-theme dark-theme-blue">
+<body class="with-side-menu-compact dark-theme dark-theme-blue" onload="loadProductList();">
 
 	<header class="site-header">
 	    <div class="container-fluid">
@@ -253,7 +253,7 @@
                    <span class="label label-success">List of total items in stock</span>
                	</h4>
                	<section class="card" style="margin: 10px 20px 10px 20px;">	
-				   	<table id="table-edit" class="table table-bordered table-hover">
+				   	<table id="stockTable" class="table table-bordered table-hover">
 					    <thead>
 					        <tr>
 						        <th width="1">#</th>
@@ -271,7 +271,6 @@
 			    </section>
 		    </div>
 
-
 		    <div class="box-typical box-typical-padding divTable" style="background: mediumturquoise;">
                	<h4 style="padding:5px 0 5px 25px;">Item details 
                    <span class="label label-success">Single item details from the stock</span>
@@ -279,19 +278,10 @@
                	<div class="row" style="padding-bottom: 15px;"> 
                		<div class="col-md-4"></div>
                		<div class="col-md-4">
-                        <!-- <label class="form-label" for="itemName">Item Name</label> -->
-                        <select class="select2-arrow form-control" id="itemName">
-                            <option>Select item from the list to see stock details.</option>
-                            <asp:PlaceHolder ID="UserIdPlaceholder" runat="server"></asp:PlaceHolder>
-                            <option>Item 1</option>
-                            <option>Item 2</option>
-                            <option>Item 3</option>
-                            <option>Item 4</option>
-
+                        <select class="select2-arrow form-control" id="productNameForStock">
+                            <option value="0">Select item from the list to see stock details.</option>
                             <%--Dynamic Field--%>
                         </select>
-                        <br />
-                        <br />
                     </div>
                     <div class="col-md-4">
                     	<div class="checkbox-toggle">
@@ -305,71 +295,18 @@
                     </div>
                	</div>
                	<section class="card" style="margin: 10px 20px 10px 20px;">	
-				   	<table id="table-edit" class="table table-bordered table-hover">
+				   	<table id="ItemStockedByCompanyTable" class="table table-bordered table-hover hidden">
 					    <thead>
 					        <tr>
 						        <th width="1">#</th>
 						        <th>Item Name</th>
-						        <th>Item Code</th>
-						        <th>Purchase Date</th>
-						        <th>Arrived Date</th>
 						        <th>Arrived Quantity</th>
 						        <th>Stock Quantity</th>
-						        <th>Category</th>				        
-		                        <th>Supplier</th>
-		                        <th>Managed By</th>
+						        <th>Arrived Date</th>
 					        </tr>
 					    </thead>
-					    <tbody>
-		                    <asp:PlaceHolder ID="PlaceHolder1" runat="server"></asp:PlaceHolder>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
+					    <tbody id="itemDetailsTableBody">
+		                    <%--Dynamic content--%>
 					    </tbody>
 				    </table>
 			    </section>
@@ -723,20 +660,26 @@
 	<script src="js/lib/input-mask/input-mask-init.js"></script>
 
     <script>
+
         $(function () {
 
+            // Touch spin setup
             $("input[name='quantity']").TouchSpin();
 
+            
+
+
+
             // Jquery table editable setting
-            $('#table-edit').Tabledit({
+       //     $('#table-edit').Tabledit({
 
-                url: 'Customers.aspx',
-			    columns: {
-				    identifier: [0, 'id'],
-                    editable: [[1, 'cName'], [2, 'cContactNo'], [3, 'cEmail'], [4, 'cAddress']]
-			    }
+       //         url: 'Customers.aspx',
+			    //columns: {
+				   // identifier: [0, 'id'],
+       //             editable: [[1, 'cName'], [2, 'cContactNo'], [3, 'cEmail'], [4, 'cAddress']]
+			    //}
 
-            });
+       //     });
 
             // Customer details table edited data save button click listener
             $(".tabledit-save-button").click(function () {
@@ -1020,6 +963,80 @@
                 }
 
             }   
+
+        });
+
+        function loadProductList() {
+
+            // Setting up product name list
+            $.ajax({
+                type: "POST",
+                url: "Stock.aspx/GetProductAndUser",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: onResultSuccess
+            });
+
+            function onResultSuccess(AjaxResponse) {
+
+                // Response of ajax will be in <option>##<option>##<option> format and we need to split those three by ##
+                // Once splited we will append options into select tag
+                var optionArray = AjaxResponse.d.split('##');
+                // Before appending options dont forget to clear select otherwise item will be repeated
+                $("#productNameForStock").children('option:not(:first)').remove();
+                $("#productNameForStock").append(optionArray[0]);
+
+            }
+
+        }
+
+        $("#productNameForStock").change(function () {
+
+            if ($("#productNameForStock option:selected").val() == 0) {
+                $("#ItemStockedByCompanyTable").addClass('hidden');
+            } else {
+
+                var productId = JSON.stringify({
+                    productId : $("#productNameForStock option:selected").val()
+                });
+
+                try {
+                    $.ajax({
+                        type: "POST",
+                        url: "Stock.aspx/GetProductStockDetails",
+                        contentType: "application/json; charset=utf-8",
+                        data : productId,
+                        dataType: "json",
+                        success: onSuccess,
+                        failure: onFailure
+                    });
+
+                    function onFailure(AjaxResponse) {
+                        swal({
+                            title: "Error found",
+                            text: AjaxResponse.d,
+                            type: "warning"
+                        });
+                    }
+
+                    function onSuccess(AjaxResponse) {
+
+                        // Before appending into table dont forget to clear select otherwise item will be repeated
+                        $("#itemDetailsTableBody").empty();
+                        $("#itemDetailsTableBody").append(AjaxResponse.d);
+                        $("#ItemStockedByCompanyTable").removeClass('hidden');
+
+                    }
+
+                } catch (exe) {
+                    swal({
+                        title: "Error found",
+                        text: exe,
+                        type: "warning"
+                    });
+                }
+
+            }
 
         });
 

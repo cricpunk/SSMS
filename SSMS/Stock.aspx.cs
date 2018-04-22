@@ -47,7 +47,6 @@ namespace SSMS {
                 StockTablePlaceHolder.Controls.Add(new Literal { Text = stockTable.ToString() }); ;
                 // Items table end
 
-
                 connection.Close();
                 connection.Dispose();
 
@@ -128,7 +127,7 @@ namespace SSMS {
 
         }
 
-        // Insert items
+        // get product and users name
         [WebMethod]
         public static string GetProductAndUser() {
 
@@ -170,9 +169,56 @@ namespace SSMS {
                 connection.Close();
                 connection.Dispose();
 
+                // Return string by adding splitter between two result
                 string optionCollection = productOption.ToString()+ "##" + usersOption.ToString();
 
                 return optionCollection;
+
+            } catch (Exception e) {
+                return e.Message;
+            }
+
+        }
+
+        // get product and users name
+        [WebMethod]
+        public static string GetProductStockDetails(string productId) {
+
+            try {
+
+                SqlConnection connection = new SqlConnection(connectingStringSSMS);
+                connection.Open();
+
+                SqlCommand cmdSelectStockDetails = new SqlCommand {
+                    Connection = connection,
+                    CommandText = "SELECT stock_id, arrived_quantity, stock_quantity, arrived_date " +
+                                     "FROM stock WHERE product_id = "+ Convert.ToInt32(productId) +"",
+                    CommandType = CommandType.Text
+                };
+
+                // Items table start
+                SqlDataReader stockDataReader = cmdSelectStockDetails.ExecuteReader();
+                StringBuilder stockTable = new StringBuilder();
+                while (stockDataReader.Read()) {
+
+                    stockTable.Append("<tr>");
+                    stockTable.Append("<td class='color-blue-grey-lighter'>" + stockDataReader.GetValue(0) + "</td>");
+                    stockTable.Append("<td>" + GetProductName(connection, productId) + "</td>");
+                    stockTable.Append("<td>" + stockDataReader.GetValue(1) + "</td>");
+                    stockTable.Append("<td>" + stockDataReader.GetValue(2) + "</td>");
+                    stockTable.Append("<td>" + stockDataReader.GetValue(3) + "</td>");
+                    stockTable.Append("</tr>");
+
+                }
+                stockDataReader.Close();
+
+                connection.Close();
+                connection.Dispose();
+
+                // Return string by adding splitter between two result
+                string result = stockTable.ToString();
+
+                return result;
 
             } catch (Exception e) {
                 return e.Message;
