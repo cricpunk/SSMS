@@ -309,30 +309,23 @@
 	                    </header>
 	                    <div class="box-typical-body panel-body">
 	                        <table class="tbl-typical">
-	                            <tr>
-                                    <th width="1"><div>#</div></th>
-	                                <th><div>Particulars</div></th>
-                                    <th><div>Customer</div></th>
-                                    <th><div>Billing date</div></th>
-                                    <th><div>User</div></th>
-	                                <th align="center"><div>Quantity</div></th>
-	                                <th align="center"><div>Rate</div></th>
-	                                <th align="center"><div>Total</div></th>
-                                    <th align="center"><div>Credit</div></th>
-	                            </tr>
-	                            <tr>
-                                    <td>1</td>
-	                                <td>
-	                                    <span class="label label-primary">History book</span>
-	                                </td>
-	                                <td>Customer name</td>
-                                    <td>04/08/2018</td>
-                                    <td>Pankaj koirala</td>
-                                    <td align="center">10</td>
-                                    <td align="center">50</td>
-	                                <td align="center">500</td>
-	                                <td align="center">200</td>
-	                            </tr>	                           
+                                <thead>
+	                                <tr>
+                                        <th width="1"><div>#</div></th>
+	                                    <th><div>Particulars</div></th>
+                                        <th><div>Customer</div></th>
+                                        <th><div>Billing date</div></th>
+                                        <th><div>User</div></th>
+	                                    <th align="center"><div>Quantity (No.)</div></th>
+	                                    <th align="center"><div>Rate (Rs.)</div></th>
+	                                    <th align="center"><div>Total (Rs.)</div></th>
+                                        <th align="center"><div>Credit (Rs.)</div></th>
+	                                </tr>
+                                </thead>
+                                <tbody>
+                                    <asp:PlaceHolder ID="SaleTablePlaceHolder" runat="server"></asp:PlaceHolder>
+					    	        <%--Dynamic Content--%>	                                
+                                </tbody>
 	                        </table>
 	                    </div><!--.box-typical-body-->
 	                </section><!--.box-typical-dashboard-->
@@ -798,8 +791,7 @@
                                                         <input id="rate" 
                                                             class="form-control"
                                                             placeholder="Rs. 0" 
-                                                            name="number"
-                                                            data-validation="[NOTEMPTY]"/>
+                                                            disabled="true"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -945,7 +937,9 @@
 
 	<script>
 
-         
+        //Hashmap to store item code and price. Hashmap has been initialized from BtnSaleCircle click listener
+        var rateCodeMap = new Object();
+
         // Form validation
         $('#saleItemForm').validate({
 
@@ -967,7 +961,14 @@
         });
 
 
-        // Insert employee record
+        // To set rate for the product
+        $("#productCode").focusout(function () {
+
+            $("#rate").val(rateCodeMap["" + this.value + ""]);          
+
+        });
+
+        // Sale product to customer
         function saleToCustomer() {
 
             var salesData = JSON.stringify({
@@ -1038,7 +1039,7 @@
 
         }  
 
-
+        // Sale button click function
         $("#btnSaleCircle").click(function () {
 
              try {
@@ -1062,16 +1063,27 @@
 
                 function onSuccess(AjaxResponse) {
 
-                    var productCodeList = AjaxResponse.d.split(',');
+                    var productCodePriceList = AjaxResponse.d.split('##');
 
-                     $.typeahead({
-                        input: "#productCode",
-                        order: "asc",
-                        minLength: 1,
-                        source: {
-                            data: productCodeList
-                        }
-                    });
+                    var productCodeList = productCodePriceList[0].split(',');
+                    var productPriceList = productCodePriceList[1].split(',');
+
+                    var i;                
+                    for (i = 0; i < productCodeList.length; i++) {
+                        rateCodeMap[productCodeList[i]] = productPriceList[i];
+                        //console.log(rateCodeMap[productCodeList[i]] = productPriceList[i]);
+                        //console.log(rateCodeMap);
+                    }
+
+                    $.typeahead({
+                    input: "#productCode",
+                    order: "asc",
+                    minLength: 1,
+                    source: {
+                        data: productCodeList
+                    }
+
+                });
                         
                 }
             } catch (exe) {
@@ -1084,21 +1096,13 @@
             
         });
 
+        // Key press validation to restrict char input
         $('input[name="number"]').bind('keypress', function(e){
 		    var keyCode = (e.which)?e.which:event.keyCode
 		    return !(keyCode>31 && (keyCode<48 || keyCode>57)); 
 	    });
 
-
-        $("#rate").keyup(function (e) {    
-
-            var qty = parseInt($("#quantity").val());
-            var rate = this.value;
-            var total = qty * rate;
-            $("#total").val(total);
-
-        });
-
+        // To calculate credit amount
         $("#amountReceived").keyup(function (e) {
 
             var totalBill = parseInt($("#total").val());
@@ -1108,8 +1112,18 @@
 
         });
 
-
+        // Quantity touchspin
         $("input[name='quantity']").TouchSpin();
+
+        // Calculate total amount while increasing or decreasing quantity
+        $("input[name='quantity']").change(function () {
+
+            var rate = $("#rate").val();
+            var qty = parseInt($("#quantity").val());
+            var total = qty * parseInt(rate);
+            $("#total").val(total);
+
+        });
 
         // Jquery table editable setting
         $('#table-edit').Tabledit({
