@@ -133,11 +133,12 @@
 	                            <img src="img/avatar-2-64.png" alt="">
 	                        </button>
 	                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
-	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
-	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-cog"></span>Settings</a>
-	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-question-sign"></span>Help</a>
+	                            <a class="dropdown-item" href="#" id="currentUser"><span class="font-icon glyphicon glyphicon-user"></span><%=currentUser%></a>
 	                            <div class="dropdown-divider"></div>
-	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
+	                            <a class="dropdown-item" href="#" onclick="document.getElementById('btnLogOut').click()"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
+                                <form runat="server">
+                                    <asp:Button ID="btnLogOut" runat="server" Text="Call Button Click"  Style="display:none" OnClick="logOut" />
+                                </form>
 	                        </div>
 	                    </div>
 	
@@ -150,7 +151,7 @@
 
 	                <div class="site-header-collapsed">
 	                    <div class="site-header-collapsed-in">                
-	                        <div class="dropdown">
+	                        <%--<div class="dropdown">
 	                            <button class="btn btn-rounded dropdown-toggle" id="dd-header-add" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	                                Add
 	                            </button>
@@ -161,7 +162,7 @@
 	                                <a class="dropdown-item" href="#">CATprer Test</a>
 	                                <a class="dropdown-item" href="#">Third Party Test</a>
 	                            </div>
-	                        </div>
+	                        </div>--%>
 	                        <div class="site-header-search-container">
 	                            <form class="site-header-search closed">
 	                                <input type="text" placeholder="Search"/>
