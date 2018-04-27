@@ -305,18 +305,13 @@
 					        <tr>
 						        <th width="1">#</th>
 						        <th>Item Name</th>
-						        <th>Item Code</th>
-						        <th>Purchase Date</th>
-						        <th>Arrived Date</th>
 						        <th>Arrived Quantity</th>
 						        <th>Stock Quantity</th>
-						        <th>Category</th>				        
-		                        <th>Supplier</th>
-		                        <th>Managed By</th>
+						        <th>Arrived Date</th>
 					        </tr>
 					    </thead>
 					    <tbody>
-		                    <asp:PlaceHolder ID="PlaceHolder2" runat="server"></asp:PlaceHolder>
+		                    <asp:PlaceHolder ID="OutOfStockTablePlaceholder" runat="server"></asp:PlaceHolder>
 
 					    </tbody>
 				    </table>

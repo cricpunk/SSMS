@@ -22,7 +22,8 @@ namespace SSMS {
                 connection.Open();
                 Response.Write("Connected");
 
-                // Command to select all the stock details from the database
+
+                // 1. Command to select all the stock details from the database
                 SqlCommand cmdSelectStockDetails = new SqlCommand {
                     Connection = connection,
                     CommandText = "SELECT stock_id, arrived_quantity, stock_quantity, arrived_date, product_id " +
@@ -30,7 +31,18 @@ namespace SSMS {
                     CommandType = CommandType.Text
                 };
 
-                // Command to select all the unsold stock details in last 31 days from the database
+
+                // 2. Command to select items which are out of stock
+                SqlCommand cmdOutOfStockDetails = new SqlCommand {
+                    Connection = connection,
+                    CommandText = "SELECT s.stock_id, s.arrived_quantity, s.stock_quantity, s.product_id, s.arrived_date " +
+                                    "FROM stock s " +
+                                    "WHERE s.stock_quantity < 10 ",
+                    CommandType = CommandType.Text
+                };
+
+
+                // 3. Command to select all the unsold stock details in last 31 days from the database
                 SqlCommand cmdUnsoldStockDetails = new SqlCommand {
                     Connection = connection,
                     CommandText = "SELECT s.stock_id, s.arrived_quantity, s.stock_quantity, s.product_id, s.arrived_date " +
@@ -44,7 +56,8 @@ namespace SSMS {
                     CommandType = CommandType.Text
                 };
 
-                // Items table start
+
+                //1. Items table start
                 // Read all data from query and append to string builder which will be used to build table row
                 SqlDataReader stockDataReader = cmdSelectStockDetails.ExecuteReader();
                 StringBuilder stockTable = new StringBuilder();
@@ -63,7 +76,30 @@ namespace SSMS {
                 StockTablePlaceHolder.Controls.Add(new Literal { Text = stockTable.ToString() }); ;
                 // Items table end
 
-                // Items table start for stock items which is not sold in last 31 days
+
+                // 2. Items table start for out of stock items
+                // Read all data from query and append to string builder which will be used to build table row
+                SqlDataReader outOfStockDataReader = cmdOutOfStockDetails.ExecuteReader();
+                StringBuilder outOfStockTable = new StringBuilder();
+                int countOOS = 1;
+                while (outOfStockDataReader.Read()) {
+
+                    outOfStockTable.Append("<tr>");
+                    outOfStockTable.Append("<td class='color-blue-grey-lighter'>" + countOOS + "</td>");
+                    outOfStockTable.Append("<td>" + GetProductName(connection, outOfStockDataReader.GetValue(3)) + "</td>");
+                    outOfStockTable.Append("<td>" + outOfStockDataReader.GetValue(1) + "</td>");
+                    outOfStockTable.Append("<td>" + outOfStockDataReader.GetValue(2) + "</td>");
+                    outOfStockTable.Append("<td>" + outOfStockDataReader.GetValue(4) + "</td>");
+                    outOfStockTable.Append("</tr>");
+
+                    countOOS++;
+                }
+                outOfStockDataReader.Close();
+                OutOfStockTablePlaceholder.Controls.Add(new Literal { Text = outOfStockTable.ToString() }); ;
+                // Out of stock table end
+
+
+                // 3. Items table start for stock items which is not sold in last 31 days
                 // Read all data from query and append to string builder which will be used to build table row
                 SqlDataReader unsoldStockDataReader = cmdUnsoldStockDetails.ExecuteReader();
                 StringBuilder unsoldStockTable = new StringBuilder();
@@ -82,7 +118,7 @@ namespace SSMS {
                 }
                 unsoldStockDataReader.Close();
                 UnsoldStockPlaceholder.Controls.Add(new Literal { Text = unsoldStockTable.ToString() }); ;
-                // Items table end
+                // Unsold stock in last 31 days table end
 
                 connection.Close();
                 connection.Dispose();
