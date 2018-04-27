@@ -723,6 +723,7 @@
 										                <div class="typeahead-field">
 									                        <span class="typeahead-query">
 										                        <input id="productCode"
+                                                                       placeholder="CCC123"
 											                           class="form-control"
 											                           name="Product code"
 											                           type="search"
@@ -740,7 +741,7 @@
                                                     <label class="form-label" for="quantity">Quantity</label>
                                                     <div class="form-control-wrapper">
                                                         <div class="form-group">
-							                                <input id="quantity" type="text" value="1" name="quantity"
+							                                <input id="quantity" disabled="true" type="text" value="1" name="quantity"
                                                             data-validation="[NOTEMPTY]"
                                                             data-validation-message=" Quantity cannot be empty"/>
 						                                </div>
@@ -862,7 +863,7 @@
 
                                         <div class="row" style="margin-top:20px;">
 									        <div class="modal-upload-bottom form-group">
-				                                <button class="btn btn-rounded" type="submit">Sale</button>
+				                                <button class="btn btn-rounded" type="submit" id="btnSale">Sale</button>
 				                            </div><!--.modal-upload-bottom-->
                                         </div>
 
@@ -964,15 +965,27 @@
         // To set rate for the product
         $("#productCode").focusout(function () {
 
-            $("#rate").val(rateCodeMap["" + this.value + ""]);          
+            var codeNameArr = this.value.split('(');
+            var productCode = codeNameArr[0];    
+
+            if (productCode == '') {
+                $("#rate").attr('placeholder', 'Rs. 0');
+                $("#quantity").prop('disabled', true);
+            } else {
+                $("#quantity").prop('disabled', false);
+                $("#rate").val(rateCodeMap["" + productCode + ""]);              
+            }
 
         });
 
         // Sale product to customer
         function saleToCustomer() {
 
+            var codeNameArr = $("#productCode").val().split('(');
+            var productCode = codeNameArr[0];  
+
             var salesData = JSON.stringify({
-                pCode : $("#productCode").val(),
+                pCode: productCode,
                 qty : $("#quantity").val(),
                 customer : $("#customerName option:selected").val(),
                 billingDate : $("#date-mask-input").val(),
@@ -1006,8 +1019,8 @@
                     switch (AjaxResponse.d) {
                         case "1":
                             swal({
-                                title: "Inserted!",
-                                text: "Supplier details has been successfully inserted !",
+                                title: "Sold!",
+                                text: "Transaction has been completed successfully!",
                                 type: "success",
                                 confirmButtonClass: "btn-success",
                                 confirmButtonText: "Done"
@@ -1066,11 +1079,13 @@
                     var productCodePriceList = AjaxResponse.d.split('##');
 
                     var productCodeList = productCodePriceList[0].split(',');
+
                     var productPriceList = productCodePriceList[1].split(',');
 
                     var i;                
                     for (i = 0; i < productCodeList.length; i++) {
-                        rateCodeMap[productCodeList[i]] = productPriceList[i];
+                        var codeArr = productCodeList[i].split('(');
+                        rateCodeMap[codeArr[0]] = productPriceList[i];
                         //console.log(rateCodeMap[productCodeList[i]] = productPriceList[i]);
                         //console.log(rateCodeMap);
                     }
@@ -1122,6 +1137,57 @@
             var qty = parseInt($("#quantity").val());
             var total = qty * parseInt(rate);
             $("#total").val(total);
+
+            var codeNameArr = $("#productCode").val().split('(');
+            var productCode = codeNameArr[0];  
+
+            var sendData = JSON.stringify({
+                pCode: productCode,
+                requestQty : $("#quantity").val()
+            });
+
+            try {
+
+                $.ajax({
+                    type : "POST",
+                    url : "Index.aspx/ValidateQuantity",
+                    contentType: "application/json; charset=utf-8",
+                    data : sendData,
+                    dataType : "json",
+                    success : onSuccess,
+                    failure : onFailure
+                });
+
+                function onFailure(AjaxResponse) {
+                    swal({
+                        title: "Error found",
+                        text: AjaxResponse.d,
+                        type: "warning"
+                    });
+                }
+
+                function onSuccess(AjaxResponse) {
+
+                    if (!(AjaxResponse.d == 'available')) {
+                        alert(AjaxResponse.d);
+                        $("#btnSale").prop('disabled', true);
+                    } else {
+                        $("#btnSale").prop('disabled', false);
+                    }
+
+                    
+
+                }
+
+            } catch (exe) {
+                swal({
+                    title: "Error found",
+                    text: exe,
+                    type: "warning"
+                });
+            }
+
+
 
         });
 

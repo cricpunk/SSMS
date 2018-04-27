@@ -110,7 +110,7 @@ namespace SSMS {
                 // Get product code
                 SqlCommand cmdGetProductCode = new SqlCommand {
                     Connection = connection,
-                    CommandText = "SELECT item_code, price FROM product_details",
+                    CommandText = "SELECT item_code, price, item_name FROM product_details",
                     CommandType = CommandType.Text
                 };
 
@@ -121,7 +121,7 @@ namespace SSMS {
                 StringBuilder productCodeList = new StringBuilder();
                 StringBuilder productPriceList = new StringBuilder();
                 while (productDataReader.Read()) {
-                    productCodeList.Append(""+ productDataReader.GetValue(0)  + ",");
+                    productCodeList.Append(""+ productDataReader.GetValue(0)  + "("+ productDataReader.GetValue(2) + "),");
                     productPriceList.Append("" + productDataReader.GetValue(1) + ",");
                 }
                 productDataReader.Close();
@@ -175,22 +175,101 @@ namespace SSMS {
                     CommandType = CommandType.Text
                 };
 
-                int count = cmdInsertSell.ExecuteNonQuery();
+                SqlCommand cmdDeductQuantity = new SqlCommand {
+                    Connection = connection,
+                    CommandText = "UPDATE stock SET stock_quantity = stock_quantity - "+ Convert.ToInt32(qty) + " WHERE product_id = "+ GetProductId(connection, pCode) + "",
+                    CommandType = CommandType.Text
+                };
 
+                SqlCommand cmdDeleteFromSale = new SqlCommand {
+                    Connection = connection,
+                    CommandText = "DELETE FROM sales_details WHERE product_id = " + GetProductId(connection, pCode) + "",
+                    CommandType = CommandType.Text
+                };
 
-                connection.Close();
-                connection.Dispose();
+                int salesCount = cmdInsertSell.ExecuteNonQuery();
+                int qtyUpdateCount = cmdDeductQuantity.ExecuteNonQuery();                
 
-                if (count == 1) {
-                    return ("1");
+                // If sales table is recoeded successfully then decrease quantity from stock table
+                // else return unsuccessful message to the user
+                if (salesCount == 1) {
+
+                    // If quantity is deducted successfully from stock table then return success message 
+                    // Else delete last sales record and return unsuccessful message to the user
+                    if (qtyUpdateCount == 1) {
+
+                        connection.Close();
+                        connection.Dispose();
+                        return ("1");
+
+                    } else {
+
+                        cmdDeleteFromSale.ExecuteNonQuery();
+                        connection.Close();
+                        connection.Dispose();
+
+                        return ("0");
+
+                    }
+                    
                 } else {
+
                     return ("0");
+
                 }
 
             } catch (Exception e) {
                 return e.Message;
             }
 
+        }
+
+        [WebMethod]
+        public static string ValidateQuantity(string pCode, string requestQty) {
+
+            try {
+
+                SqlConnection connection = new SqlConnection(connectingStringSSMS);
+                connection.Open();
+
+                // Get qty
+                SqlCommand cmdGetQty = new SqlCommand {
+                    Connection = connection,
+                    CommandText = "SELECT stock_quantity FROM stock WHERE product_id = " + GetProductId(connection, pCode) + "",
+                    CommandType = CommandType.Text
+                };
+
+                SqlDataReader qtyReader = cmdGetQty.ExecuteReader();
+                StringBuilder result = new StringBuilder();
+
+                if(qtyReader.HasRows) {
+
+                    while (qtyReader.Read()) {
+
+                        int availableQty = Convert.ToInt32(qtyReader.GetValue(0));
+                        int reqQty = Convert.ToInt32(requestQty);
+
+                        if (availableQty < reqQty) {
+                            result.Append("There is only "+ availableQty.ToString()  + " quantity available in stock.");
+                        } else {
+                            result.Append("available");
+                        }
+
+                    }
+
+                } else {
+                    result.Append("Item not available in stock");
+                }
+                
+                qtyReader.Close();
+
+                return result.ToString();
+
+            } catch(Exception exception) {
+                return exception.Message;
+            }
+
+            
         }
 
         private static int GetProductId(SqlConnection connection, string productCode) {

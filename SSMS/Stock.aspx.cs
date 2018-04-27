@@ -63,9 +63,9 @@ namespace SSMS {
             try {
 
                 SqlConnection connection = new SqlConnection(connectingStringSSMS);
-                connection.Open();
+                connection.Open();               
 
-                int stockQuantity = Convert.ToInt32(quantity) + GetStockQuantity(pId, connection);
+                //int stockQuantity = Convert.ToInt32(quantity) + GetStockQuantity(pId, connection);
 
                 // Change date format form ss/mm/yy to yy/mm/dd
                 // Microsoft SQL support yy/mm//dd format
@@ -94,10 +94,22 @@ namespace SSMS {
                 // "there is already an open datareader associated with this command which must be closed first." error at run time.
                 stockIdReader.Close();
 
+                SqlCommand cmdCheckProductExistance = new SqlCommand {
+                    Connection = connection,
+                    CommandText = "SELECT stock_id, product_id FROM stock WHERE product_id = " + Convert.ToInt32(pId) + "",
+                    CommandType = CommandType.Text
+                };
+
                 SqlCommand cmdInsertIntoStock = new SqlCommand {
                     Connection = connection,
                     CommandText = "INSERT INTO stock (stock_id, arrived_quantity, stock_quantity, arrived_date, product_id) " +
-                    "VALUES (" + stockId + ", " + Convert.ToInt32(quantity) + ", " + stockQuantity + ", '" + arrDate + "', " + Convert.ToInt32(pId) + ")",
+                    "VALUES (" + stockId + ", " + Convert.ToInt32(quantity) + ", " + Convert.ToInt32(quantity) + ", '" + arrDate + "', " + Convert.ToInt32(pId) + ")",
+                    CommandType = CommandType.Text
+                };
+
+                SqlCommand cmdUpdateIntoStock = new SqlCommand {
+                    Connection = connection,
+                    CommandText = "UPDATE stock SET arrived_quantity = arrived_quantity + " + Convert.ToInt32(quantity) + ", stock_quantity = stock_quantity + " + quantity + ", arrived_date = '"+ arrDate +"' WHERE product_id = "+ Convert.ToInt32(pId) +"",
                     CommandType = CommandType.Text
                 };
 
@@ -107,9 +119,37 @@ namespace SSMS {
                     "VALUES (" + Convert.ToInt32(uId) + ", " + stockId + ")",
                     CommandType = CommandType.Text
                 };
+               
 
-                int stockCount = cmdInsertIntoStock.ExecuteNonQuery();
-                int stockManagerCount = cmdInsertIntoStockManager.ExecuteNonQuery();
+                int stockCount = 0;
+                int stockManagerCount = 0;
+
+                SqlDataReader productExistance = cmdCheckProductExistance.ExecuteReader();
+                if (productExistance.HasRows) {
+
+                    // While updating stock manager table we need stock id
+                    int toBeUpdatedStockId = 0;
+
+                    while (productExistance.Read()) {
+                        toBeUpdatedStockId = Convert.ToInt32(productExistance.GetValue(0));
+                    }
+
+                    SqlCommand cmdUpdateIntoStockManager = new SqlCommand {
+                        Connection = connection,
+                        CommandText = "UPDATE stock_manager SET user_id = " + Convert.ToInt32(uId) + " WHERE stock_id = " + toBeUpdatedStockId + "",
+                        CommandType = CommandType.Text
+                    };
+
+                    //Update stock
+                    stockCount = cmdUpdateIntoStock.ExecuteNonQuery();
+                    stockManagerCount = cmdUpdateIntoStockManager.ExecuteNonQuery();
+
+                } else {
+                    //Insert stock
+                    stockCount = cmdInsertIntoStock.ExecuteNonQuery();
+                    stockManagerCount = cmdInsertIntoStockManager.ExecuteNonQuery();
+                    
+                }
 
 
                 connection.Close();
