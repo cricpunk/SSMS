@@ -12,9 +12,25 @@ using System.Web.UI.WebControls;
 namespace SSMS {
     public partial class Stock : System.Web.UI.Page {
 
-        protected static string connectingStringSSMS = "Data Source=DESKTOP-1NMRQA9\\SQLEXPRESS; Initial Catalog=SSMS; Integrated Security=True; MultipleActiveResultSets=true";
+        public static string currentUser;
+
+        //For Purushottam's database server
+        protected static string connectingStringSSMS = "Data Source=DESKTOP-JI61OUF\\SQLEXPRESS; Initial Catalog=SSMS; Integrated Security=True; MultipleActiveResultSets=true";
+
+        //For Pankaj's database server
+        //protected static string connectingStringSSMS = "Data Source=DESKTOP-1NMRQA9\\SQLEXPRESS; Initial Catalog=SSMS; Integrated Security=True; MultipleActiveResultSets=true";
 
         protected void Page_Load(object sender, EventArgs e) {
+
+            if (Session["Name"] == null)
+            {
+                Response.Redirect("Login.aspx");
+            }
+            else
+            {
+                currentUser = Session["Full_Name"].ToString();
+                System.Diagnostics.Debug.WriteLine("Supplier Session username: " + Session["Name"].ToString());
+            }
 
             try {
 
@@ -127,6 +143,14 @@ namespace SSMS {
                 Response.Write("<script>alert(' " + exception.Message + "')</script>");
             }
 
+        }
+
+        [WebMethod]
+        public void logOut(object sender, EventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("Index Session Logout:");
+            HttpContext.Current.Session.Abandon();
+            Response.Redirect("Login.aspx");
         }
 
         // Insert items
