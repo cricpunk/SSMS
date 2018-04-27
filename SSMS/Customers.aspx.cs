@@ -62,6 +62,22 @@ namespace SSMS {
                     CommandType = CommandType.Text
                 };
 
+                // Command to get all customers who have not purchase any items in last 31 days
+                SqlCommand cmdCustomerPurchaseDetails = new SqlCommand {
+                    Connection = connection,
+                    CommandText = "SELECT cd.name, cd.address, cd.contact_no, cd.email, " +
+                                            "sd.quantity, sd.rate, sd.total_price, sd.credit_amount, sd.billing_date, sd.user_id, sd.product_id " +
+                                            "FROM customer_details cd " +
+                                            "JOIN sales_details sd " +
+                                            "ON cd.customer_id = sd.customer_id " +
+                                            "WHERE sd.billing_date <= GetDate() - 31 " +
+                                            "AND cd.customer_id NOT IN " +
+                                            "(SELECT sd.customer_id FROM sales_details sd " +
+                                            "WHERE sd.billing_date >= GetDate() - 31)",
+                    CommandType = CommandType.Text
+                };
+
+
                 // Read all customer details and store into table
                 SqlDataReader customerDataReader = cmdSelectCustomerDetails.ExecuteReader();
                 StringBuilder customerTable = new StringBuilder();
@@ -78,7 +94,34 @@ namespace SSMS {
 
                 }
                 customerDataReader.Close();
-                TablePlaceHolder.Controls.Add(new Literal { Text = customerTable.ToString() }); ;
+                TablePlaceHolder.Controls.Add(new Literal { Text = customerTable.ToString() });
+
+                
+                // Read all customer details and store into table
+                SqlDataReader notPurchaseCustomerDataReader = cmdCustomerPurchaseDetails.ExecuteReader();
+                StringBuilder notPurchaseCustomerTable = new StringBuilder();
+                int count = 1;
+                while (notPurchaseCustomerDataReader.Read()) {
+
+                    notPurchaseCustomerTable.Append("<tr>");
+                    notPurchaseCustomerTable.Append("<td class='color-blue-grey-lighter'>" + count + "</td>");
+                    notPurchaseCustomerTable.Append("<td>" + notPurchaseCustomerDataReader.GetValue(0) + "</td>");
+                    notPurchaseCustomerTable.Append("<td>" + notPurchaseCustomerDataReader.GetValue(1) + "</td>");
+                    notPurchaseCustomerTable.Append("<td>" + notPurchaseCustomerDataReader.GetValue(2) + "</td>");
+                    notPurchaseCustomerTable.Append("<td>" + notPurchaseCustomerDataReader.GetValue(3) + "</td>");
+                    notPurchaseCustomerTable.Append("<td>" + SSMS.Index.GetProductName(connection, notPurchaseCustomerDataReader.GetValue(10)) + "</td>");
+                    notPurchaseCustomerTable.Append("<td>" + notPurchaseCustomerDataReader.GetValue(4) + "</td>");
+                    notPurchaseCustomerTable.Append("<td>" + notPurchaseCustomerDataReader.GetValue(5) + "</td>");
+                    notPurchaseCustomerTable.Append("<td>" + notPurchaseCustomerDataReader.GetValue(6) + "</td>");
+                    notPurchaseCustomerTable.Append("<td>" + notPurchaseCustomerDataReader.GetValue(7) + "</td>");
+                    notPurchaseCustomerTable.Append("<td>" + notPurchaseCustomerDataReader.GetValue(8) + "</td>");
+                    notPurchaseCustomerTable.Append("<td class='color-blue-grey-lighter'>" + GetUserName(connection, notPurchaseCustomerDataReader.GetValue(9)) + "</td>");
+                    notPurchaseCustomerTable.Append("</tr>");
+
+                    count++;
+                }
+                notPurchaseCustomerDataReader.Close();
+                CustomerNotPurchasePlaceholder.Controls.Add(new Literal { Text = notPurchaseCustomerTable.ToString() });
 
                 connection.Close();
                 connection.Dispose();

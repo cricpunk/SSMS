@@ -245,6 +245,7 @@
 
 	    <div class="container-fluid">
 
+            <%--Form to insert customer details--%>
 	    	<div class="box-typical box-typical-padding divForm hidden">
                	<h4 style="padding:5px 0 5px 25px;">Add new customer 
                    <span class="label label-success">New</span>
@@ -342,6 +343,7 @@
                 </section>                  
 		    </div>	
 
+            <%--Table to display customer details--%>
 	    	<div class="box-typical box-typical-padding divTable">
                	<h4 style="padding:5px 0 5px 25px;">Customers 
                    <span class="label label-success">List of total customers</span>
@@ -371,6 +373,7 @@
 			    </section><!--.box-typical-->
 			</div>
 
+           <%--Table to display customers who have purchased items in last 31 days--%>
 			<div class="box-typical box-typical-padding divTable" style="background: mediumturquoise;">
                	<h4 style="padding:5px 0 5px 25px;">Customer purchase
                    <span class="label label-success">Purchase details in last 31 days</span>
@@ -414,76 +417,32 @@
 			    </section>
 		    </div>
 
+            <%--Table to display customers who have not purchased any items in last 31 days--%>
 		    <div class="box-typical box-typical-padding divTable">
                	<h4 style="padding:5px 0 5px 25px;">Customers
                    <span class="label label-success">Who have not bought any item in the last 31 days </span>
                	</h4>
                	<section class="card" style="margin: 10px 20px 10px 20px;">	
-				   	<table id="table-edit" class="table table-bordered table-hover">
+				   	<table id="customerNotPurchaseTable" class="table table-bordered table-hover">
 					    <thead>
 					        <tr>
 						        <th width="1">#</th>
 						        <th>Customer Name</th>
-						        <th>Item Code</th>
-						        <th>Purchase Date</th>
-						        <th>Arrived Date</th>
-						        <th>Arrived Quantity</th>
-						        <th>Stock Quantity</th>
-						        <th>Category</th>				        
-		                        <th>Supplier</th>
-		                        <th>Managed By</th>
+						        <th>Address</th>
+						        <th>Contact No</th>
+						        <th>Email</th>
+						        <th>Product Name</th>
+						        <th>Quantity (No.)</th>
+						        <th>Rate (Rs.)</th>				        
+		                        <th>Total (Rs.)</th>
+		                        <th>Credit (Rs.)</th>
+                                <th>Billing Date</th>
+                                <th>Sold By</th>
 					        </tr>
 					    </thead>
-					    <tbody>
-		                    <asp:PlaceHolder ID="PlaceHolder3" runat="server"></asp:PlaceHolder>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
+					    <tbody id="customerNotPurchaseTableTbody">
+		                    <asp:PlaceHolder ID="CustomerNotPurchasePlaceholder" runat="server"></asp:PlaceHolder>
+					    	<%--Dynamic Content--%>
 					    </tbody>
 				    </table>
 			    </section>

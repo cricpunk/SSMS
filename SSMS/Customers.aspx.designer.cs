@@ -40,13 +40,13 @@ namespace SSMS {
         protected global::System.Web.UI.WebControls.PlaceHolder CustomerNamePlaceHolder;
         
         /// <summary>
-        /// PlaceHolder3 control.
+        /// CustomerNotPurchasePlaceholder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolder3;
+        protected global::System.Web.UI.WebControls.PlaceHolder CustomerNotPurchasePlaceholder;
         
         /// <summary>
         /// EmployeeListPlaceholder control.
