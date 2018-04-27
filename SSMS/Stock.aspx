@@ -243,6 +243,7 @@
 
 	    <div class="container-fluid">
 
+            <%--Total items in stock table--%>
 	    	<div class="box-typical box-typical-padding divTable">
                	<h4 style="padding:5px 0 5px 25px;">Items 
                    <span class="label label-success">List of total items in stock</span>
@@ -266,6 +267,7 @@
 			    </section>
 		    </div>
 
+            <%--Select item to see stock details--%>
 		    <div class="box-typical box-typical-padding divTable" style="background: mediumturquoise;">
                	<h4 style="padding:5px 0 5px 25px;">Item details 
                    <span class="label label-success">Single item details from the stock</span>
@@ -292,6 +294,7 @@
 			    </section>
 		    </div>
 
+            <%--Out of stock table--%>
 		    <div class="box-typical box-typical-padding divTable">
                	<h4 style="padding:5px 0 5px 25px;">Items 
                    <span class="label label-success">Out of stock</span>
@@ -314,177 +317,31 @@
 					    </thead>
 					    <tbody>
 		                    <asp:PlaceHolder ID="PlaceHolder2" runat="server"></asp:PlaceHolder>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
+
 					    </tbody>
 				    </table>
 			    </section>
 		    </div>
 
+            <%--Unsold stock in last 31 days table--%>
 		    <div class="box-typical box-typical-padding divTable" style="background: mediumturquoise;">
                	<h4 style="padding:5px 0 5px 25px;">Unsold stock 
                    <span class="label label-success">Unsold item in last 31 days</span>
                	</h4>
                	<section class="card" style="margin: 10px 20px 10px 20px;">	
-				   	<table id="table-edit" class="table table-bordered table-hover">
+				   	<table id="unsold_stock_table" class="table table-bordered table-hover">
 					    <thead>
-					        <tr>
+					       <tr>
 						        <th width="1">#</th>
 						        <th>Item Name</th>
-						        <th>Item Code</th>
-						        <th>Purchase Date</th>
-						        <th>Arrived Date</th>
 						        <th>Arrived Quantity</th>
 						        <th>Stock Quantity</th>
-						        <th>Category</th>				        
-		                        <th>Supplier</th>
-		                        <th>Managed By</th>
+						        <th>Arrived Date</th>
 					        </tr>
 					    </thead>
 					    <tbody>
-		                    <asp:PlaceHolder ID="PlaceHolder3" runat="server"></asp:PlaceHolder>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
+		                    <asp:PlaceHolder ID="UnsoldStockPlaceholder" runat="server"></asp:PlaceHolder>
+					    	<%--Dunamic Content--%>
 					    </tbody>
 				    </table>
 			    </section>

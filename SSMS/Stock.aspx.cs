@@ -22,6 +22,7 @@ namespace SSMS {
                 connection.Open();
                 Response.Write("Connected");
 
+                // Command to select all the stock details from the database
                 SqlCommand cmdSelectStockDetails = new SqlCommand {
                     Connection = connection,
                     CommandText = "SELECT stock_id, arrived_quantity, stock_quantity, arrived_date, product_id " +
@@ -29,7 +30,22 @@ namespace SSMS {
                     CommandType = CommandType.Text
                 };
 
+                // Command to select all the unsold stock details in last 31 days from the database
+                SqlCommand cmdUnsoldStockDetails = new SqlCommand {
+                    Connection = connection,
+                    CommandText = "SELECT s.stock_id, s.arrived_quantity, s.stock_quantity, s.product_id, s.arrived_date " +
+                                    "FROM stock s " +
+                                    "WHERE s.product_id " +
+                                    "NOT IN " +
+                                    "(" +
+                                    "SELECT sd.product_id FROM sales_details sd " +
+                                    "WHERE sd.billing_date >= GetDate() - 31" +
+                                    ")",
+                    CommandType = CommandType.Text
+                };
+
                 // Items table start
+                // Read all data from query and append to string builder which will be used to build table row
                 SqlDataReader stockDataReader = cmdSelectStockDetails.ExecuteReader();
                 StringBuilder stockTable = new StringBuilder();
                 while (stockDataReader.Read()) {
@@ -45,6 +61,27 @@ namespace SSMS {
                 }
                 stockDataReader.Close();
                 StockTablePlaceHolder.Controls.Add(new Literal { Text = stockTable.ToString() }); ;
+                // Items table end
+
+                // Items table start for stock items which is not sold in last 31 days
+                // Read all data from query and append to string builder which will be used to build table row
+                SqlDataReader unsoldStockDataReader = cmdUnsoldStockDetails.ExecuteReader();
+                StringBuilder unsoldStockTable = new StringBuilder();
+                int count = 1;
+                while (unsoldStockDataReader.Read()) {
+
+                    unsoldStockTable.Append("<tr>");
+                    unsoldStockTable.Append("<td class='color-blue-grey-lighter'>" + count + "</td>");
+                    unsoldStockTable.Append("<td>" + GetProductName(connection, unsoldStockDataReader.GetValue(3)) + "</td>");
+                    unsoldStockTable.Append("<td>" + unsoldStockDataReader.GetValue(1) + "</td>");
+                    unsoldStockTable.Append("<td>" + unsoldStockDataReader.GetValue(2) + "</td>");
+                    unsoldStockTable.Append("<td>" + unsoldStockDataReader.GetValue(4) + "</td>");
+                    unsoldStockTable.Append("</tr>");
+
+                    count++;
+                }
+                unsoldStockDataReader.Close();
+                UnsoldStockPlaceholder.Controls.Add(new Literal { Text = unsoldStockTable.ToString() }); ;
                 // Items table end
 
                 connection.Close();
