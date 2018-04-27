@@ -440,7 +440,7 @@ namespace SSMS {
         }
 
         // Get product name by its id
-        private static string GetProductName(SqlConnection connection, Object objId) {
+        public static string GetProductName(SqlConnection connection, Object objId) {
 
             if (!(objId is DBNull)) {
 

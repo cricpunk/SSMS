@@ -20,39 +20,32 @@ namespace SSMS
         //For Pankaj's database server
         protected static string connectingStringSSMS = "Data Source=DESKTOP-1NMRQA9\\SQLEXPRESS; Initial Catalog=SSMS; Integrated Security=True; MultipleActiveResultSets=true";
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
+        protected void Page_Load(object sender, EventArgs e) {
             
-            if (Session["Name"] == null)
-            {
+            if (Session["Name"] == null) {
 
             }
-            else
-            {
+            else {
                 Response.Redirect("Index.aspx");
                 System.Diagnostics.Debug.WriteLine("Supplier Session username: " + Session["Name"].ToString());
             }
         }
 
         [WebMethod]
-        public static string VerifyLoginCredentials(string username, string password)
-        {
+        public static string VerifyLoginCredentials(string username, string password) {
 
-            try
-            {
+            try {
 
                 SqlConnection connection = new SqlConnection(connectingStringSSMS);
                 connection.Open();
 
-                SqlCommand cmdVerifyUser = new SqlCommand
-                {
+                SqlCommand cmdVerifyUser = new SqlCommand {
                     Connection = connection,
-                    CommandText = "SELECT user_name, full_name, user_type, password FROM users WHERE user_name = '"+username+"' AND password = '"+password+"'",
+                    CommandText = "SELECT user_id, user_name, full_name, user_type, password FROM users WHERE user_name = '"+username+"' AND password = '"+password+"'",
                     CommandType = CommandType.Text
                 };
 
-                SqlCommand cmdVerifyUsername = new SqlCommand
-                {
+                SqlCommand cmdVerifyUsername = new SqlCommand {
                     Connection = connection,
                     CommandText = "SELECT user_name FROM users WHERE user_name = '"+username+"'",
                     CommandType = CommandType.Text
@@ -60,13 +53,14 @@ namespace SSMS
 
                 SqlDataReader credentialsReader = cmdVerifyUser.ExecuteReader();
                 //return credentialsReader.HasRows.ToString();
-                if (credentialsReader.HasRows)
-                {
-                    while (credentialsReader.Read())
-                    {
-                        HttpContext.Current.Session["Full_Name"] = credentialsReader.GetValue(1);
-                        HttpContext.Current.Session["User_Type"] = credentialsReader.GetValue(2);
+                if (credentialsReader.HasRows) {
+
+                    while (credentialsReader.Read()) {
+                        HttpContext.Current.Session["User_Id"] = credentialsReader.GetValue(0);
+                        HttpContext.Current.Session["Full_Name"] = credentialsReader.GetValue(2);
+                        HttpContext.Current.Session["User_Type"] = credentialsReader.GetValue(3);
                     }
+
                     HttpContext.Current.Session["Name"] = username;
                     System.Diagnostics.Debug.WriteLine("Login Session username: " + HttpContext.Current.Session["Name"].ToString());
                     credentialsReader.Close();
@@ -74,18 +68,16 @@ namespace SSMS
                     connection.Dispose();
                     return ("1");
                 }
-                else
-                {
+                else {
+
                     SqlDataReader usernameCredentialsReader = cmdVerifyUsername.ExecuteReader();
-                    if (usernameCredentialsReader.HasRows)
-                    {
+                    if (usernameCredentialsReader.HasRows) {
                         usernameCredentialsReader.Close();
                         connection.Close();
                         connection.Dispose();
                         return ("2");
                     }
-                    else
-                    {
+                    else {
                         usernameCredentialsReader.Close();
                         connection.Close();
                         connection.Dispose();
@@ -95,11 +87,12 @@ namespace SSMS
 
 
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 return e.GetType().ToString();
             }
 
-        }
+        }       
+
     }
+
 }

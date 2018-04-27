@@ -13,7 +13,7 @@ namespace SSMS {
 
     public partial class Index : System.Web.UI.Page {
 
-        public static string currentUser;
+        public static string currentUser, currentUserId;
 
         //For Purushottam's database server
         //protected static string connectingStringSSMS = "Data Source=DESKTOP-JI61OUF\\SQLEXPRESS; Initial Catalog=SSMS; Integrated Security=True; MultipleActiveResultSets=true";
@@ -23,17 +23,15 @@ namespace SSMS {
 
         protected void Page_Load(object sender, EventArgs e) {
 
-            if (Session["Name"] == null)
-            {
+            if (Session["Name"] == null) {
                 Response.Redirect("Login.aspx");
             }
-            else
-            {
+            else {
+                Response.Write("<script>alert('"+ GetOutOfStockInfo() +"')</script>");
                 currentUser = Session["Full_Name"].ToString();
+                currentUserId = Session["User_Id"].ToString();
                 System.Diagnostics.Debug.WriteLine("Supplier Session username: " + Session["Name"].ToString());
             }
-
-
 
             try {
 
@@ -404,6 +402,34 @@ namespace SSMS {
                 return "N.A";
             }
 
+        }
+
+        public static string GetOutOfStockInfo() {
+
+            SqlConnection connection = new SqlConnection(connectingStringSSMS);
+            connection.Open();
+
+            // 2. Command to select items which are out of stock
+            SqlCommand cmdOutOfStockDetails = new SqlCommand {
+                Connection = connection,
+                CommandText = "SELECT stock_quantity, product_id " +
+                                "FROM stock " +
+                                "WHERE stock_quantity < 10 ",
+                CommandType = CommandType.Text
+            };
+
+            SqlDataReader outOfStockDataReader = cmdOutOfStockDetails.ExecuteReader();
+            StringBuilder outOfStockItem = new StringBuilder();
+
+            while (outOfStockDataReader.Read()) {
+                outOfStockItem.Append("" + SSMS.Stock.GetProductName(connection, outOfStockDataReader.GetValue(1)) + " is out of stock. Only " + outOfStockDataReader.GetValue(0) + " item left.");
+            }
+            outOfStockDataReader.Close();
+
+            connection.Close();
+            connection.Dispose();
+
+            return outOfStockItem.ToString();
         }
 
     }

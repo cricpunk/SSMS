@@ -68,6 +68,20 @@
             color: darkgray !important;
         }
 
+        .panel-title {
+            width: -moz-fit-content;
+            padding: 5px 30px 10px 30px;
+            margin-bottom: 0px;
+            background: #00a8ff;
+            color: #FFFFFF;
+        }
+
+        .box-typical-header {
+            background: darkmagenta;
+        }
+
+
+
     </style>
 
 </head>
@@ -848,11 +862,11 @@
                                                 <div class="form-group">
                                                     <label class="form-label" for="userName">User name</label>
                                                     <div class="form-control-wrapper">
-                                                        <select class="select2-arrow form-control" id="userName"
+                                                        <select class="select2-arrow form-control" disabled="true" id="userName"
                                                             name="User"
                                                             data-validation="[NOTEMPTY]"
                                                             data-validation-message="You have to select user.">
-                                                            <option value="">Select user.</option>
+                                                            <option value=" <%=SSMS.Index.currentUserId%> "> <%=SSMS.Index.currentUser%> </option>
                                                             <asp:PlaceHolder ID="UserNamePlaceHolder" runat="server"></asp:PlaceHolder>
                                                             <%--Dynamic Field--%>
                                                         </select>

@@ -234,7 +234,7 @@
                             console.log('0: ', 'login failed!');
                             swal({
                                 title: "Login Failed",
-                                text: "Username and password not match :(",
+                                text: "Username and password does not match :(",
                                 type: "warning"
                             });
                             break;
@@ -242,7 +242,7 @@
                             console.log('2: ', 'Password Error!');
                             swal({
                                 title: "Login Failed",
-                                text: "Password not match :(",
+                                text: "Password does not match :(",
                                 type: "warning"
                             });
                             break;
@@ -308,13 +308,13 @@
         // Different buttons hidden status manupulation
 
 
-        // 6. Form's Ui heigh style
+        // 6. Form's Ui height style
         $(function () {
             $('.page-center').matchHeight({
                 target: $('html')
             });
         });
-// Form's Ui heigh style
+        // Form's Ui height style
 
 
     </script>

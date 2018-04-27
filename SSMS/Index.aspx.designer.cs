@@ -11,16 +11,7 @@ namespace SSMS {
     
     
     public partial class Index {
-
-        /// <summary>
-        /// CustomerNamePlaceHolder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder SaleTablePlaceHolder;
-
+        
         /// <summary>
         /// btnLogOut control.
         /// </summary>
@@ -29,6 +20,15 @@ namespace SSMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnLogOut;
+        
+        /// <summary>
+        /// SaleTablePlaceHolder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder SaleTablePlaceHolder;
         
         /// <summary>
         /// CustomerNamePlaceHolder control.
