@@ -21,14 +21,22 @@ namespace SSMS {
 
                 SqlConnection connection = new SqlConnection(connectingStringSSMS);
                 connection.Open();
-                Response.Write("Connected");
 
+                // Get user name and is
                 SqlCommand cmdGetUsersName = new SqlCommand {
                     Connection = connection,
                     CommandText = "SELECT user_id, full_name FROM users",
                     CommandType = CommandType.Text
                 };
+                
+                // Get customer name and id
+                SqlCommand cmdGetCustomersName = new SqlCommand {
+                    Connection = connection,
+                    CommandText = "SELECT customer_id, name FROM customer_details",
+                    CommandType = CommandType.Text
+                };
 
+                // Set options for user
                 SqlDataReader usersDataReader = cmdGetUsersName.ExecuteReader();
                 StringBuilder usersOption = new StringBuilder();
                 while (usersDataReader.Read()) {
@@ -37,6 +45,16 @@ namespace SSMS {
                 usersDataReader.Close();
                 UserIdPlaceholder.Controls.Add(new Literal { Text = usersOption.ToString() });
 
+                // Set options for customer
+                SqlDataReader customersDataReader = cmdGetCustomersName.ExecuteReader();
+                StringBuilder customersOption = new StringBuilder();
+                while (customersDataReader.Read()) {
+                    customersOption.Append("<option value='" + customersDataReader.GetValue(0) + "'>" + customersDataReader.GetValue(1) + "</option>");
+                }
+                customersDataReader.Close();
+                CustomerNamePlaceHolder.Controls.Add(new Literal { Text = customersOption.ToString() });
+
+                // Get all customer details
                 SqlCommand cmdSelectCustomerDetails = new SqlCommand {
                     Connection = connection,
                     CommandText = "SELECT customer_id, name, address, contact_no, email, user_id " +
@@ -44,6 +62,7 @@ namespace SSMS {
                     CommandType = CommandType.Text
                 };
 
+                // Read all customer details and store into table
                 SqlDataReader customerDataReader = cmdSelectCustomerDetails.ExecuteReader();
                 StringBuilder customerTable = new StringBuilder();
                 while (customerDataReader.Read()) {
@@ -187,6 +206,60 @@ namespace SSMS {
                 return e.Message;
             }
 
+        }
+
+        [WebMethod]
+        public static string GetCustomerPurchaseRecord(string cId) {
+
+            try {
+
+                SqlConnection connection = new SqlConnection(connectingStringSSMS);
+                connection.Open();
+
+                SqlCommand cmdCustomerPurchaseDetails = new SqlCommand {
+                    Connection = connection,
+                    CommandText = "SELECT cd.name, cd.address, cd.contact_no, cd.email, " +
+                                            "sd.quantity, sd.rate, sd.total_price, sd.credit_amount, sd.billing_date, sd.user_id, sd.product_id " +
+                                            "FROM customer_details cd " +
+                                            "JOIN sales_details sd " +
+                                            "ON cd.customer_id = sd.customer_id " +
+                                            "WHERE cd.customer_id = " + cId + "" +
+                                            "AND sd.billing_date >= GetDate() - 31",
+                    CommandType = CommandType.Text
+                };
+
+                // Read all customer details and store into table
+                SqlDataReader customerDataReader = cmdCustomerPurchaseDetails.ExecuteReader();
+                StringBuilder customerTable = new StringBuilder();
+                int count = 1;
+                while (customerDataReader.Read()) {
+
+                    customerTable.Append("<tr>");
+                    customerTable.Append("<td class='color-blue-grey-lighter'>" + count + "</td>");
+                    customerTable.Append("<td>" + customerDataReader.GetValue(0) + "</td>");
+                    customerTable.Append("<td>" + customerDataReader.GetValue(1) + "</td>");
+                    customerTable.Append("<td>" + customerDataReader.GetValue(2) + "</td>");
+                    customerTable.Append("<td>" + customerDataReader.GetValue(3) + "</td>");
+                    customerTable.Append("<td>" + SSMS.Index.GetProductName(connection, customerDataReader.GetValue(10)) + "</td>");
+                    customerTable.Append("<td>" + customerDataReader.GetValue(4) + "</td>");
+                    customerTable.Append("<td>" + customerDataReader.GetValue(5) + "</td>");
+                    customerTable.Append("<td>" + customerDataReader.GetValue(6) + "</td>");
+                    customerTable.Append("<td>" + customerDataReader.GetValue(7) + "</td>");
+                    customerTable.Append("<td>" + customerDataReader.GetValue(8) + "</td>");
+                    customerTable.Append("<td class='color-blue-grey-lighter'>" + GetUserName(connection, customerDataReader.GetValue(9)) + "</td>");
+                    customerTable.Append("</tr>");
+
+                    count++;
+                }
+                customerDataReader.Close();
+
+                return customerTable.ToString();
+
+            } catch(Exception e) {
+                return e.Message;
+            }
+
+            
         }
 
         private static string GetUserName(SqlConnection connection, Object objId) {

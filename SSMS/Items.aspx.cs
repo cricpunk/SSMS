@@ -150,6 +150,10 @@ namespace SSMS {
                 SqlConnection connection = new SqlConnection(connectingStringSSMS);
                 connection.Open();
 
+                // Change date format form dd/mm/yy to yy/mm/dd
+                // Microsoft SQL support yy/mm/dd format
+                string[] date = purchaseDate.Split('/');
+                string purDate = date[2] + "/" + date[1] + "/" + date[0];
 
                 // For the purpose of product details primary key auto increment 
                 int itemId = 0;
@@ -195,7 +199,7 @@ namespace SSMS {
                 SqlCommand cmdInsertItems = new SqlCommand {
                     Connection = connection,
                     CommandText = "INSERT INTO product_details (product_id, item_name, item_code, description, price, purchase_date, category_id, supplier_id, user_id) " +
-                    "VALUES (" + itemId + ", '" + iName + "', '" + iCode + "', '" + description + "', '" + price + "', '" + purchaseDate + "', " + Convert.ToInt32(category) +
+                    "VALUES (" + itemId + ", '" + iName + "', '" + iCode + "', '" + description + "', '" + price + "', '" + purDate + "', " + Convert.ToInt32(category) +
                     ", " + Convert.ToInt32(supplier) + ", " + Convert.ToInt32(userName) + ")",
                     CommandType = CommandType.Text
                 };

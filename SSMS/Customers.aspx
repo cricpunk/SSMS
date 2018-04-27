@@ -73,6 +73,19 @@
             line-height: 28px;
         }
 
+        #result_message {
+            text-align: center;
+            width: -moz-fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 15px;
+            padding: 10px 60px;
+            border: 1px solid blueviolet;
+            border-radius: 20px;
+            color: blueviolet;
+            background: honeydew;
+        }
+
   	</style>
 </head>
 
@@ -366,86 +379,36 @@
                		<div class="col-md-4"></div>
                		<div class="col-md-4">
                         <!-- <label class="form-label" for="itemName">Item Name</label> -->
-                        <select class="select2-arrow form-control" id="itemName">
-                            <option>Select customer name from the list to see purchase details.</option>
-                            <asp:PlaceHolder ID="PlaceHolder1" runat="server"></asp:PlaceHolder>
-                            <option>Customer 1</option>
-                            <option>Customer 2</option>
-                            <option>Customer 3</option>
-                            <option>Customer 4</option>
-
+                        <select class="select2-arrow form-control" id="customerNameOption">
+                            <option value="0">Select customer name from the list to see purchase details.</option>
+                            <asp:PlaceHolder ID="CustomerNamePlaceHolder" runat="server"></asp:PlaceHolder>
                             <%--Dynamic Field--%>
                         </select>
-                        <br />
-                        <br />
+                        
                     </div>
+                    <div class="col-md-4"></div>                    
                	</div>
-               	<section class="card" style="margin: 10px 20px 10px 20px;">	
-				   	<table id="table-edit" class="table table-bordered table-hover">
+                <h4 id="result_message" class="hidden"></h4>
+               	<section class="card hidden" style="margin: 10px 20px 10px 20px;" id="customerTableResultSection">	
+				   	<table id="customerPurchaseTable" class="table table-bordered table-hover">
 					    <thead>
 					        <tr>
 						        <th width="1">#</th>
 						        <th>Customer Name</th>
-						        <th>Item Code</th>
-						        <th>Purchase Date</th>
-						        <th>Arrived Date</th>
-						        <th>Arrived Quantity</th>
-						        <th>Stock Quantity</th>
-						        <th>Category</th>				        
-		                        <th>Supplier</th>
-		                        <th>Managed By</th>
+						        <th>Address</th>
+						        <th>Contact No</th>
+						        <th>Email</th>
+						        <th>Product Name</th>
+						        <th>Quantity (No.)</th>
+						        <th>Rate (Rs.)</th>				        
+		                        <th>Total (Rs.)</th>
+		                        <th>Credit (Rs.)</th>
+                                <th>Billing Date</th>
+                                <th>Sold By</th>
 					        </tr>
 					    </thead>
-					    <tbody>
-		                    <asp:PlaceHolder ID="PlaceHolder2" runat="server"></asp:PlaceHolder>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
-					    	<tr>
-					    		<td>1</td>
-					    		<td>Item 1</td>
-					    		<td>CO125</td>
-					    		<td>15/12/2018</td>
-					    		<td>16/12/2018</td>
-					    		<td>100</td>
-					    		<td>150</td>
-					    		<td>Category 1</td>
-					    		<td>Supplier 1</td>
-					    		<td>Pankaj Koirala</td>
-					    	</tr>
+					    <tbody id="customerPurchaseTableTbody">
+		                    <%--Dynamic content--%>
 					    </tbody>
 				    </table>
 			    </section>
@@ -905,6 +868,69 @@
                 }
 
             }   
+
+            $("#customerNameOption").change(function () {
+
+                var selectedValue = $("#customerNameOption option:selected").val();
+
+                if (selectedValue != '0') {
+
+                    var customerID = JSON.stringify({
+                        cId: selectedValue
+                    });
+
+                    try {
+
+                        $.ajax({
+                            type : "POST",
+                            url : "Customers.aspx/GetCustomerPurchaseRecord",
+                            data : customerID,
+                            contentType : "application/json; charset=utf-8",
+                            dataType : "json",
+                            success : onSuccess,
+                            failure : onFailure
+                        });
+
+                        function onFailure(AjaxResponse) {
+                            swal({
+                                title: "Error found",
+                                text: AjaxResponse.d,
+                                type: "warning"
+                            });
+                        }
+
+                        function onSuccess(AjaxResponse) {
+
+                            if (AjaxResponse.d == '') {
+                                $("#customerPurchaseTableTbody").empty();
+                                $("#customerTableResultSection").addClass('hidden');                             
+                                $("#result_message").text("Customer does not have any purchase details in last 31 days.");
+                                $("#result_message").removeClass("hidden");
+
+                            } else {
+                                $("#result_message").addClass("hidden");
+                                $("#customerPurchaseTableTbody").empty();
+                                $("#customerTableResultSection").removeClass('hidden');
+                                $("#customerPurchaseTableTbody").append(AjaxResponse.d);
+                            }
+                            
+                        
+                        }
+                    } catch (exe) {
+
+                        swal({
+                            title: "Error found",
+                            text: exe,
+                            type: "warning"
+                         });
+
+                    }
+
+
+                }
+                
+
+            });
 
         });
 

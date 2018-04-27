@@ -145,6 +145,10 @@ namespace SSMS {
                 SqlConnection connection = new SqlConnection(connectingStringSSMS);
                 connection.Open();
 
+                // Change date format form dd/mm/yy to yy/mm/dd
+                // Microsoft SQL support yy/mm/dd format
+                string[] date = billingDate.Split('/');
+                string bilDate = date[2] + "/" + date[1] + "/" + date[0];
 
                 // For the purpose of primary key auto increment 
                 int saleId = 0;
@@ -171,7 +175,7 @@ namespace SSMS {
                 SqlCommand cmdInsertSell = new SqlCommand {
                     Connection = connection,
                     CommandText = "INSERT INTO sales_details (sales_id, quantity, rate, total_price, credit_amount, billing_date, customer_id, user_id, product_id) " +
-                    "VALUES (" + saleId + ", " + Convert.ToInt32(qty) + ", " + Convert.ToInt32(rate) + ", " + Convert.ToInt32(total) + ", " + Convert.ToInt32(credit) + ", '" + billingDate + "', " + Convert.ToInt32(customer) + ",  " + Convert.ToInt32(user) + ", " + GetProductId(connection, pCode) + ")",
+                    "VALUES (" + saleId + ", " + Convert.ToInt32(qty) + ", " + Convert.ToInt32(rate) + ", " + Convert.ToInt32(total) + ", " + Convert.ToInt32(credit) + ", '" + bilDate + "', " + Convert.ToInt32(customer) + ",  " + Convert.ToInt32(user) + ", " + GetProductId(connection, pCode) + ")",
                     CommandType = CommandType.Text
                 };
 
