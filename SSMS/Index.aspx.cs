@@ -493,7 +493,7 @@ namespace SSMS {
                 return productname;
 
             } else {
-                return "N.A";
+                return "Unavailable product";
             }
 
         }
@@ -521,7 +521,7 @@ namespace SSMS {
                 return customerName;
 
             } else {
-                return "N.A";
+                return "Past customer";
             }
 
         }
@@ -549,7 +549,7 @@ namespace SSMS {
                 return userName;
 
             } else {
-                return "N.A";
+                return "Old user";
             }
 
         }

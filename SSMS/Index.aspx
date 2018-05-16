@@ -38,17 +38,20 @@
 
     <style type="text/css">
     	
-    	.gallery-grid .gallery-col {
-    		width: 100px !Important;
-    		height: 100px !Important;
-    		margin-right: 15px;
-    		margin-top: -13px;
+    	.gallery-col {
+    		width: 60px !Important;
+    		height: 60px !Important;
+    		margin: 0 10px 10px 0 !important;
+    		position: fixed !important; 
+            bottom: 0px !important; 
+            right: 0px !important;
+            z-index: 100 !important;
     	}
 
     	.gallery-item {
     		border-radius: 100px !Important;
-    		width: 100px !Important;
-    		height: 100px !Important;
+    		width: 60px !Important;
+    		height: 60px !Important;
     	}
 
     	.gallery-item .gallery-picture {
@@ -80,13 +83,17 @@
             background: darkmagenta;
         }
 
+        .box-typical.box-typical-dashboard .box-typical-body {
+            overflow: auto;
+            height: 450px;
+        }
 
 
     </style>
 
 </head>
 
-<body class="with-side-menu-compact dark-theme dark-theme-blue">
+<body class="with-side-menu-compact dark-theme dark-theme-blue" onload="indexOnLoad(<%=SSMS.Index.currentUserId%>);">
 
 	<header class="site-header">
 	    <div class="container-fluid">
@@ -244,80 +251,19 @@
 
 	<div class="page-content">
 
-	    <div class="container-fluid">
-
-	    	
-    		<div class="row">
-	    		<div class="col-xl-6">
-	    			<div class="box-typical box-typical-padding" style="background-color: #00a8ff; height: 145px;">
-						<div class="gallery-grid">
-
-							<div class="gallery-col" data-toggle="modal" data-target="#salesModal" id="btnSaleCircle">
-								<article class="gallery-item">
-									<img class="gallery-picture" src="img/sales.png" alt="">
-									<div class="gallery-hover-layout">
-										<div class="gallery-hover-layout-in">
-											<p>SALE</p>
-										</div>
-									</div>
-								</article>
-							</div><!--.gallery-col-->
-
-							<div class="gallery-col">
-								<article class="gallery-item">
-									<img class="gallery-picture" src="img/order.png" alt="">
-									<div class="gallery-hover-layout">
-										<div class="gallery-hover-layout-in">
-											<p>ORDER</p>
-										</div>
-									</div>
-								</article>
-							</div><!--.gallery-col-->
-
-							<div class="gallery-col">
-								<article class="gallery-item">
-									<img class="gallery-picture" src="img/add.png" alt="">
-									<div class="gallery-hover-layout">
-										<div class="gallery-hover-layout-in">
-											<p>ADD ITEM</p>
-										</div>
-									</div>
-								</article>
-							</div><!--.gallery-col-->
-						</div>
+        <div class="gallery-col" data-toggle="modal" data-target="#salesModal" id="btnSaleCircle">
+			<article class="gallery-item">
+				<img class="gallery-picture" src="img/sales.png" alt="">
+				<div class="gallery-hover-layout">
+					<div class="gallery-hover-layout-in">
+						<p>SALE</p>
 					</div>
 				</div>
+			</article>
+		</div><!--.gallery-col-->
 
-				<div class="col-xl-6">
-					<div class="row">
-	                    <div class="col-sm-6">
-	                        <article class="statistic-box red">
-	                            <div>
-	                                <div class="number">26</div>
-	                                <div class="caption"><div>Open tickets</div></div>
-	                                <div class="percent">
-	                                    <div class="arrow up"></div>
-	                                    <p>15%</p>
-	                                </div>
-	                            </div>
-	                        </article>
-	                    </div><!--.col-->
-	                    <div class="col-sm-6">
-	                        <article class="statistic-box purple">
-	                            <div>
-	                                <div class="number">12</div>
-	                                <div class="caption"><div>Closes tickets</div></div>
-	                                <div class="percent">
-	                                    <div class="arrow down"></div>
-	                                    <p>11%</p>
-	                                </div>
-	                            </div>
-	                        </article>
-	                    </div><!--.col-->
-	                </div>
-            	</div>
-        	</div>
-	
+	    <div class="container-fluid">
+
             <div class="row">
                 <div class="col-xl-12 dahsboard-column">
 	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
@@ -349,7 +295,7 @@
 	            </div><!--.col-->
             </div>
 
-	        <div class="row">
+	        <div class="row hidden" id="userDiv">
 	            <div class="col-xl-12 dahsboard-column">
 	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
 	                    <header class="box-typical-header panel-heading">
@@ -1189,6 +1135,14 @@
            
         });
 
+        function indexOnLoad(uId) {
+
+            if (uId == 1) {
+                $("#userDiv").removeClass('hidden');
+            }
+
+        }
+  
 
 	</script>
 

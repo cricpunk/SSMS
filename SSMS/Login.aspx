@@ -30,22 +30,26 @@
 
     <style type="text/css">
         
-        video { 
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            z-index: -100;
-            transform: translateX(-50%) translateY(-50%);
+        body, html {
+            height: 100%;
+        }
+
+        .bg {
+            /* The image used */
+            background-image: url("img/bg4.jpg");
+
+            /* Full height */
+            height: 100%;
+
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
             background-size: cover;
-            transition: 1s opacity;
         }
 
         .sign-box {
             background-color: rgba(224,247,250 ,.6) !important;
+            width: 20% !important;
         }
 
         .alertBoxes {
@@ -54,11 +58,8 @@
 
     </style>
 </head>
-<body>
 
-    <video autoplay muted loop id="myVideo">
-        <source src="img/vbg1.mp4" type="video/mp4">
-    </video>
+<body class="bg">
 
     <div class="page-center">
         <div class="page-center-in">
@@ -97,16 +98,16 @@
                     <div class="form-group">
                         <div class="checkbox float-left">
                             <input type="checkbox" id="signed-in"/>
-                            <label for="signed-in">Keep me active</label>
+                            <%--<label for="signed-in">Keep me active</label>--%>
                         </div>
                         <div class="float-right reset">
-                            <a href="#" id="forgetPassBtn">Forget Password ?</a>
+                            <%--<a href="#" id="forgetPassBtn">Forget Password ?</a>--%>
                         </div>
                     </div>
 
                     <button type="submit" class="btn btn-rounded">Enter</button>
 
-                    <p class="sign-note">Does'nt have access ? <a href="#" id="proceedBtn">Proceed</a></p>
+                    <%--<p class="sign-note">Does'nt have access ? <a href="#" id="proceedBtn">Proceed</a></p>--%>
                     <!--<button type="button" class="close">
                         <span aria-hidden="true">&times;</span>
                     </button>-->

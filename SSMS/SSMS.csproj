@@ -375,6 +375,11 @@
     <Content Include="img\avatar-2-48.png" />
     <Content Include="img\avatar-2-64.png" />
     <Content Include="img\avatar-sign.png" />
+    <Content Include="img\bg.jpg" />
+    <Content Include="img\bg1.png" />
+    <Content Include="img\bg2.jpg" />
+    <Content Include="img\bg3.jpg" />
+    <Content Include="img\bg4.jpg" />
     <Content Include="img\bgv.mp4" />
     <Content Include="img\delete.png" />
     <Content Include="img\flags\1x1\ad.svg" />
