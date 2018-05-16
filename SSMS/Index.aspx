@@ -38,17 +38,20 @@
 
     <style type="text/css">
     	
-    	.gallery-grid .gallery-col {
-    		width: 100px !Important;
-    		height: 100px !Important;
-    		margin-right: 15px;
-    		margin-top: -13px;
+    	 .gallery-col {
+    		width: 80px !Important;
+    		height: 80px !Important;
+    		margin: 0 15px 15px 0 !important;
+    		position: fixed !important; 
+            bottom: 0px !important; 
+            right: 0px !important;
+            z-index: 100 !important;
     	}
 
     	.gallery-item {
     		border-radius: 100px !Important;
-    		width: 100px !Important;
-    		height: 100px !Important;
+    		width: 80px !Important;
+    		height: 80px !Important;
     	}
 
     	.gallery-item .gallery-picture {
@@ -60,7 +63,7 @@
     		cursor: pointer;
     	}
 
-    	.select2-selection__arrow {
+  		.select2-selection__arrow {
   			margin-top: 5px !important;
   		}
 
@@ -80,7 +83,10 @@
             background: darkmagenta;
         }
 
-
+        .box-typical.box-typical-dashboard .box-typical-body {
+            overflow: auto;
+            height: 700px;
+        }
 
     </style>
 
@@ -242,79 +248,18 @@
 
 	<div class="page-content">
 
-	    <div class="container-fluid">
+        <div class="gallery-col" data-toggle="modal" data-target="#salesModal" id="btnSaleCircle">
+		    <article class="gallery-item">
+			    <img class="gallery-picture" src="img/sales.png" alt="">
+			    <div class="gallery-hover-layout">
+				    <div class="gallery-hover-layout-in">
+					    <p>SALE</p>
+				    </div>
+			    </div>
+		    </article>
+	    </div><!--.gallery-col-->
 
-	    	
-    		<div class="row">
-	    		<div class="col-xl-6">
-	    			<div class="box-typical box-typical-padding" style="background-color: #00a8ff; height: 145px;">
-						<div class="gallery-grid">
-
-							<div class="gallery-col" data-toggle="modal" data-target="#salesModal" id="btnSaleCircle">
-								<article class="gallery-item">
-									<img class="gallery-picture" src="img/sales.png" alt="">
-									<div class="gallery-hover-layout">
-										<div class="gallery-hover-layout-in">
-											<p>SALE</p>
-										</div>
-									</div>
-								</article>
-							</div><!--.gallery-col-->
-
-							<div class="gallery-col">
-								<article class="gallery-item">
-									<img class="gallery-picture" src="img/order.png" alt="">
-									<div class="gallery-hover-layout">
-										<div class="gallery-hover-layout-in">
-											<p>ORDER</p>
-										</div>
-									</div>
-								</article>
-							</div><!--.gallery-col-->
-
-							<div class="gallery-col">
-								<article class="gallery-item">
-									<img class="gallery-picture" src="img/add.png" alt="">
-									<div class="gallery-hover-layout">
-										<div class="gallery-hover-layout-in">
-											<p>ADD ITEM</p>
-										</div>
-									</div>
-								</article>
-							</div><!--.gallery-col-->
-						</div>
-					</div>
-				</div>
-
-				<div class="col-xl-6">
-					<div class="row">
-	                    <div class="col-sm-6">
-	                        <article class="statistic-box red">
-	                            <div>
-	                                <div class="number">26</div>
-	                                <div class="caption"><div>Open tickets</div></div>
-	                                <div class="percent">
-	                                    <div class="arrow up"></div>
-	                                    <p>15%</p>
-	                                </div>
-	                            </div>
-	                        </article>
-	                    </div><!--.col-->
-	                    <div class="col-sm-6">
-	                        <article class="statistic-box purple">
-	                            <div>
-	                                <div class="number">12</div>
-	                                <div class="caption"><div>Closes tickets</div></div>
-	                                <div class="percent">
-	                                    <div class="arrow down"></div>
-	                                    <p>11%</p>
-	                                </div>
-	                            </div>
-	                        </article>
-	                    </div><!--.col-->
-	                </div>
-            	</div>
-        	</div>
+	    <div class="container-fluid">   		
 	
             <div class="row">
                 <div class="col-xl-12 dahsboard-column">
@@ -346,369 +291,6 @@
 	                </section><!--.box-typical-dashboard-->
 	            </div><!--.col-->
             </div>
-
-	        <div class="row">
-	            <div class="col-xl-6 dahsboard-column">
-	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
-	                    <header class="box-typical-header panel-heading">
-	                        <h3 class="panel-title">Recent orders</h3>
-	                    </header>
-	                    <div class="box-typical-body panel-body">
-	                        <table class="tbl-typical">
-	                            <tr>
-                                    <th width="1"><div>#</div></th>
-	                                <th><div>Particulars</div></th>
-                                    <th><div>Customer</div></th>
-                                    <th><div>Billing date</div></th>
-                                    <th><div>User</div></th>
-	                                <th align="center"><div>Quantity</div></th>
-	                                <th align="center"><div>Rate</div></th>
-	                                <th align="center"><div>Total</div></th>
-                                    <th><div>Credit</div></th>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-primary">Paid</span>
-	                                </td>
-	                                <td>John Doe</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center"><span class="semibold">Today</span> 8:30</td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-primary">Paid</span>
-	                                    <span class="label label-success">Active</span>
-	                                </td>
-	                                <td>Thomas Bayer</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center"><span class="semibold">Today</span> 16:30</td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-primary">Paid</span>
-	                                    <span class="label label-default">Inactive</span>
-	                                </td>
-	                                <td>Nicolas Karabat</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center"><span class="semibold">Yesterday</span></td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-default">Unpaid</span>
-	                                    <span class="label label-default">Inactive</span>
-	                                </td>
-	                                <td>Alexandre Pome</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center">23th May</td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-primary">Paid</span>
-	                                    <span class="label label-success">Active</span>
-	                                </td>
-	                                <td>John Doe</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center"><span class="semibold">Today</span> 8:30</td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-primary">Paid</span>
-	                                    <span class="label label-success">Active</span>
-	                                </td>
-	                                <td>Thomas Bayer</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center"><span class="semibold">Today</span> 16:30</td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-primary">Paid</span>
-	                                    <span class="label label-default">Inactive</span>
-	                                </td>
-	                                <td>Nicolas Karabat</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center"><span class="semibold">Yesterday</span></td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-default">Unpaid</span>
-	                                    <span class="label label-default">Inactive</span>
-	                                </td>
-	                                <td>Alexandre Pome</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center">23th May</td>
-	                            </tr>
-	                        </table>
-	                    </div><!--.box-typical-body-->
-	                </section><!--.box-typical-dashboard-->
-	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
-	                    <header class="box-typical-header panel-heading">
-	                        <h3 class="panel-title">Comments</h3>
-	                    </header>
-	                    <div class="box-typical-body panel-body">
-	                        <article class="comment-item">
-	                            <div class="user-card-row">
-	                                <div class="tbl-row">
-	                                    <div class="tbl-cell tbl-cell-photo">
-	                                        <a href="#">
-	                                            <img src="img/photo-64-1.jpg" alt="">
-	                                        </a>
-	                                    </div>
-	                                    <div class="tbl-cell">
-	                                        <span class="user-card-row-name"><a href="#">Matt McGill</a></span>
-	                                    </div>
-	                                    <div class="tbl-cell tbl-cell-date">
-	                                        <span class="semibold">Today</span>
-	                                        12:45
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="comment-item-txt">
-	                                <p>That’s a great idea! I’m sure we could start this project as soon as possible.</p>
-	                                <p>Let’s meet tomorow!</p>
-	                            </div>
-	                            <div class="comment-item-meta">
-	                                <a href="#" class="star">
-	                                    <i class="font-icon font-icon-star"></i>
-	                                </a>
-	                                <a href="#">
-	                                    <i class="font-icon font-icon-re"></i>
-	                                </a>
-	                                <!--Реализация кнопками-->
-	                                <!--<button type="button" class="star">-->
-	                                <!--<i class="font-icon font-icon-star"></i>-->
-	                                <!--</button>-->
-	                                <!--<button type="button">-->
-	                                <!--<i class="font-icon font-icon-re"></i>-->
-	                                <!--</button>-->
-	                            </div>
-	                        </article>
-	                        <article class="comment-item">
-	                            <div class="user-card-row">
-	                                <div class="tbl-row">
-	                                    <div class="tbl-cell tbl-cell-photo">
-	                                        <a href="#">
-	                                            <img src="img/photo-64-2.jpg" alt="">
-	                                        </a>
-	                                    </div>
-	                                    <div class="tbl-cell">
-	                                        <span class="user-card-row-name"><a href="#">Tim Collins</a></span>
-	                                    </div>
-	                                    <div class="tbl-cell tbl-cell-date">
-	                                        <span class="semibold">Today</span>
-	                                        12:45
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="comment-item-txt">
-	                                <p>That’s a great idea! I’m sure we could start this project as soon as possible.</p>
-	                                <p>Let’s meet tomorow!</p>
-	                            </div>
-	                            <div class="comment-item-meta">
-	                                <a href="#" class="star active">
-	                                    <i class="font-icon font-icon-star"></i>
-	                                </a>
-	                                <a href="#">
-	                                    <i class="font-icon font-icon-re"></i>
-	                                </a>
-	                                <!--Реализация кнопками-->
-	                                <!--<button type="button" class="star">-->
-	                                <!--<i class="font-icon font-icon-star"></i>-->
-	                                <!--</button>-->
-	                                <!--<button type="button">-->
-	                                <!--<i class="font-icon font-icon-re"></i>-->
-	                                <!--</button>-->
-	                            </div>
-	                        </article>
-	                    </div><!--.box-typical-body-->
-	                </section>
-	            </div><!--.col-->
-	            <div class="col-xl-6 dahsboard-column">
-	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
-	                    <header class="box-typical-header panel-heading">
-	                        <h3 class="panel-title">Recent tickets</h3>
-	                    </header>
-	                    <div class="box-typical-body panel-body">
-	                        <table class="tbl-typical">
-	                            <tr>
-	                                <th><div>Status</div></th>
-	                                <th><div>Subject</div></th>
-	                                <th align="center"><div>Department</div></th>
-	                                <th align="center"><div>Date</div></th>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-success">Open</span>
-	                                </td>
-	                                <td>Website down for one week</td>
-	                                <td align="center">Support</td>
-	                                <td nowrap align="center"><span class="semibold">Today</span> 8:30</td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-success">Open</span>
-	                                </td>
-	                                <td>Restoring default settings</td>
-	                                <td align="center">Support</td>
-	                                <td nowrap align="center"><span class="semibold">Today</span> 16:30</td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-warning">Progress</span>
-	                                </td>
-	                                <td>Loosing control on server</td>
-	                                <td align="center">Support</td>
-	                                <td nowrap align="center"><span class="semibold">Yesterday</span></td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-danger">Closed</span>
-	                                </td>
-	                                <td>Authorizations keys</td>
-	                                <td align="center">Support</td>
-	                                <td nowrap align="center">23th May</td>
-	                            </tr>
-	                        </table>
-	                    </div><!--.box-typical-body-->
-	                </section><!--.box-typical-dashboard-->
-	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
-	                    <header class="box-typical-header panel-heading">
-	                        <h3 class="panel-title">Contacts</h3>
-	                    </header>
-	                    <div class="box-typical-body panel-body">
-	                        <div class="contact-row-list">
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-2.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Tim Collins</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">timcolins@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">Director at Tony’s</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-1.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Maggy Smith</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">maggysmith@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">PR Manager</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-3.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Molly Bridjet</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">mollybr@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">Assistan</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-4.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Maggy Smith</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">maggysmith@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">PR Manager</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-2.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Tim Collins</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">timcolins@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">Director at Tony’s</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-1.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Maggy Smith</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">maggysmith@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">PR Manager</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-3.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Molly Bridjet</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">mollybr@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">Assistan</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-4.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Maggy Smith</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">maggysmith@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">PR Manager</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                        </div>
-	                    </div><!--.box-typical-body-->
-	                </section><!--.box-typical-dashboard-->
-	            </div><!--.col-->
-	        </div>
 
 	    </div><!--.container-fluid-->
 

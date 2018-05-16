@@ -11,14 +11,13 @@ using System.Web.UI.WebControls;
 
 namespace SSMS
 {
-    public partial class Login : System.Web.UI.Page
-    {
+    public partial class Login : System.Web.UI.Page {
 
         //For Purushottam's database server
         //protected static string connectingStringSSMS = "Data Source=DESKTOP-JI61OUF\\SQLEXPRESS; Initial Catalog=SSMS; Integrated Security=True; MultipleActiveResultSets=true";
 
         //For Pankaj's database server
-        protected static string connectingStringSSMS = "Data Source=DESKTOP-1NMRQA9\\SQLEXPRESS; Initial Catalog=SSMS; Integrated Security=True; MultipleActiveResultSets=true";
+        public static string connectingStringSSMS = "Data Source=DESKTOP-DN5LB93\\SQLEXPRESS; Initial Catalog=SSMS; Integrated Security=True; MultipleActiveResultSets=true";
 
         protected void Page_Load(object sender, EventArgs e) {
             
