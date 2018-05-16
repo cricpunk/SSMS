@@ -53,6 +53,14 @@ namespace SSMS {
                     CommandType = CommandType.Text
                 };
 
+                //Get all users
+                SqlCommand cmdGetAllUsers = new SqlCommand
+                {
+                    Connection = connection,
+                    CommandText = "SELECT user_id, full_name, user_name, user_type, phone_no, email, address FROM users",
+                    CommandType = CommandType.Text
+                };
+
                 // Options for category
                 SqlDataReader customerDataReader = cmdGetCustomerName.ExecuteReader();
                 StringBuilder customerOption = new StringBuilder();
@@ -69,7 +77,24 @@ namespace SSMS {
                 }
                 usersDataReader.Close();
 
-
+                //User Details
+                SqlDataReader userDetailReader = cmdGetAllUsers.ExecuteReader();
+                StringBuilder userDetais = new StringBuilder();
+                while (userDetailReader.Read())
+                {
+                    userDetais.Append("<tr>");
+                    userDetais.Append("<td></td>");
+                    userDetais.Append("<td class='color-blue-grey-lighter'>" + userDetailReader.GetValue(0) + "</td>");
+                    userDetais.Append("<td><span class='label label - primary'>" + userDetailReader.GetValue(1) + "</span></td>");
+                    userDetais.Append("<td>" + userDetailReader.GetValue(2) + "</td>");
+                    userDetais.Append("<td>" + userDetailReader.GetValue(3) + "</td>");
+                    userDetais.Append("<td>" + userDetailReader.GetValue(4) + "</td>");
+                    userDetais.Append("<td align='center'>" + userDetailReader.GetValue(5) + "</td>");
+                    userDetais.Append("<td align='center'>" + userDetailReader.GetValue(6) + "</td>");
+                    userDetais.Append("</tr>");
+                }
+                userDetailReader.Close();
+                UserTablePlaceholder.Controls.Add(new Literal { Text = userDetais.ToString() }); ;
 
                 SqlCommand cmdSelectItemDetails = new SqlCommand {
                     Connection = connection,
