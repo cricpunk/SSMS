@@ -69,11 +69,11 @@
         }
 
         .panel-title {
-            width: -moz-fit-content;
-            padding: 5px 30px 10px 30px;
-            margin-bottom: 0px;
-            background: #00a8ff;
-            color: #FFFFFF;
+            width: -moz-fit-content !important;
+            padding: 5px 30px 10px 30px !important;
+            margin-bottom: 0px !important;
+            background: #00a8ff !important;
+            color: #FFFFFF !important;
         }
 
         .box-typical-header {
@@ -356,11 +356,10 @@
 	                        <h3 class="panel-title">Users</h3>
 	                    </header>
 	                    <div class="box-typical-body panel-body">
-	                        <table class="tbl-typical">
+                            <table id="table-edit" class="table table-bordered table-hover">
 	                           <thead>
 	                                <tr>
                                         <th width="1"><div>#</div></th>
-	                                    <th><div>User Id</div></th>
                                         <th><div>Full Name</div></th>
                                         <th><div>username</div></th>
                                         <th><div>User Type</div></th>
@@ -1018,7 +1017,7 @@
             url: 'Suppliers.aspx',
 			columns: {
 				identifier: [0, 'id'],
-                editable: [[1, 'sName'], [2, 'sContactNo'], [3, 'sEmail'], [4, 'sAddress'], [5, 'sUrl'], [6, 'sPersonalNo']]
+                editable: [[1, 'uFullName'], [2, 'uName'], [3, 'uType'], [4, 'uPhone'], [5, 'uEmail'], [6, 'uAddress']]
 			}
 
         });
@@ -1034,13 +1033,13 @@
                 jsonObj[tag] = val;
             });
 
-            var supplierData = JSON.stringify(jsonObj);
+            var userData = JSON.stringify(jsonObj);
 
             try {
                 $.ajax({
                     type: "POST",
-                    url: "Suppliers.aspx/UpdateSupplierDetails",
-                    data: supplierData,
+                    url: "Index.aspx/UpdateUser",
+                    data: userData,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: onSuccess,
@@ -1061,7 +1060,7 @@
                         case "1":
                             swal({
                                 title: "Updated!",
-                                text: "Supplier details has been successfully updated !",
+                                text: "User details has been successfully updated !",
                                 type: "success",
                                 confirmButtonClass: "btn-success",
                                 confirmButtonText: "Done"
@@ -1100,10 +1099,11 @@
                 id: $(this).closest('tr').children('td:first').text()
             });
 
+            alert(data);
             try {
                 $.ajax({
                     type: "POST",
-                    url: "Suppliers.aspx/DeleteRecord",
+                    url: "Index.aspx/DeleteRecord",
                     data: data,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -1125,7 +1125,7 @@
                         case "1":
                             swal({
                                 title: "Deleted!",
-                                text: "Supplier record has been successfully deleted !",
+                                text: "User record has been successfully deleted !",
                                 type: "success",
                                 confirmButtonClass: "btn-success",
                                 confirmButtonText: "Done"
@@ -1154,6 +1154,7 @@
                     type: "warning"
                 });
             }
+
         });
 
         //Add supplier button click listener

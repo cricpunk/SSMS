@@ -79,14 +79,13 @@ namespace SSMS {
                 while (userDetailReader.Read())
                 {
                     userDetais.Append("<tr>");
-                    userDetais.Append("<td></td>");
                     userDetais.Append("<td class='color-blue-grey-lighter'>" + userDetailReader.GetValue(0) + "</td>");
                     userDetais.Append("<td><span class='label label - primary'>" + userDetailReader.GetValue(1) + "</span></td>");
                     userDetais.Append("<td>" + userDetailReader.GetValue(2) + "</td>");
                     userDetais.Append("<td>" + userDetailReader.GetValue(3) + "</td>");
                     userDetais.Append("<td>" + userDetailReader.GetValue(4) + "</td>");
-                    userDetais.Append("<td align='center'>" + userDetailReader.GetValue(5) + "</td>");
-                    userDetais.Append("<td align='center'>" + userDetailReader.GetValue(6) + "</td>");
+                    userDetais.Append("<td>" + userDetailReader.GetValue(5) + "</td>");
+                    userDetais.Append("<td>" + userDetailReader.GetValue(6) + "</td>");
                     userDetais.Append("</tr>");
                 }
                 userDetailReader.Close();
@@ -369,6 +368,85 @@ namespace SSMS {
             }
 
             
+        }
+
+        // Update user
+        [WebMethod]
+        public static string UpdateUser(string id, string uFullName, string uName, string uType, string uPhone, string uEmail, string uAddress) {
+
+            try {
+
+                SqlConnection connection = new SqlConnection(connectingStringSSMS);
+                connection.Open();
+
+                SqlCommand cmdUpdateCustomer = new SqlCommand {
+                    Connection = connection,
+                    CommandText = "UPDATE users SET full_name = '" + uFullName + "', user_name = '" + uName + "',  user_type = '" + uType + "', " +
+                    "phone_no = '" + uPhone + "', email = '" + uEmail + "', address = '" + uAddress + "'" +
+                    " WHERE user_id = " + Convert.ToInt32(id) + "",
+                    CommandType = CommandType.Text
+                };
+
+                int count = cmdUpdateCustomer.ExecuteNonQuery();
+
+                connection.Close();
+                connection.Dispose();
+
+                if (count == 1)
+                {
+                    return ("1");
+                }
+                else
+                {
+                    return ("0");
+                }
+
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+
+        }
+
+        // Delete items
+        [WebMethod]
+        public static string DeleteRecord(string id)
+        {
+
+            try
+            {
+
+                SqlConnection connection = new SqlConnection(connectingStringSSMS);
+                connection.Open();
+
+                SqlCommand cmdDelete = new SqlCommand
+                {
+                    Connection = connection,
+                    CommandText = "DELETE FROM users WHERE user_id = " + Convert.ToInt32(id) + "",
+                    CommandType = CommandType.Text
+                };
+
+                int count = cmdDelete.ExecuteNonQuery();
+
+                connection.Close();
+                connection.Dispose();
+
+                if (count == 1)
+                {
+                    return ("1");
+                }
+                else
+                {
+                    return ("0");
+                }
+
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+
         }
 
         private static int GetProductId(SqlConnection connection, string productCode) {
