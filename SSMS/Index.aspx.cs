@@ -13,13 +13,13 @@ namespace SSMS {
 
     public partial class Index : System.Web.UI.Page {
 
-        public static string currentUser, currentUserId;
+        public static string currentUser, currentUserId, userName;
 
         //For Purushottam's database server
-        //protected static string connectingStringSSMS = "Data Source=DESKTOP-JI61OUF\\SQLEXPRESS; Initial Catalog=SSMS; Integrated Security=True; MultipleActiveResultSets=true";
+        protected static string connectingStringSSMS = "Data Source=DESKTOP-JI61OUF\\SQLEXPRESS; Initial Catalog=SSMS; Integrated Security=True; MultipleActiveResultSets=true";
 
         //For Pankaj's database server
-        protected static string connectingStringSSMS = "Data Source=DESKTOP-1NMRQA9\\SQLEXPRESS; Initial Catalog=SSMS; Integrated Security=True; MultipleActiveResultSets=true";
+        //protected static string connectingStringSSMS = "Data Source=DESKTOP-1NMRQA9\\SQLEXPRESS; Initial Catalog=SSMS; Integrated Security=True; MultipleActiveResultSets=true";
 
         protected void Page_Load(object sender, EventArgs e) {
 
@@ -29,6 +29,7 @@ namespace SSMS {
             else {
                 Response.Write("<script>alert('"+ GetOutOfStockInfo() +"')</script>");
                 currentUser = Session["Full_Name"].ToString();
+                userName = Session["User_Name"].ToString();
                 currentUserId = Session["User_Id"].ToString();
                 System.Diagnostics.Debug.WriteLine("Supplier Session username: " + Session["Name"].ToString());
             }
@@ -52,6 +53,14 @@ namespace SSMS {
                     CommandType = CommandType.Text
                 };
 
+                //Get all users
+                SqlCommand cmdGetAllUsers = new SqlCommand
+                {
+                    Connection = connection,
+                    CommandText = "SELECT user_id, full_name, user_name, user_type, phone_no, email, address FROM users",
+                    CommandType = CommandType.Text
+                };
+
                 // Options for category
                 SqlDataReader customerDataReader = cmdGetCustomerName.ExecuteReader();
                 StringBuilder customerOption = new StringBuilder();
@@ -68,7 +77,24 @@ namespace SSMS {
                 }
                 usersDataReader.Close();
 
-
+                //User Details
+                SqlDataReader userDetailReader = cmdGetAllUsers.ExecuteReader();
+                StringBuilder userDetais = new StringBuilder();
+                while (userDetailReader.Read())
+                {
+                    userDetais.Append("<tr>");
+                    userDetais.Append("<td></td>");
+                    userDetais.Append("<td class='color-blue-grey-lighter'>" + userDetailReader.GetValue(0) + "</td>");
+                    userDetais.Append("<td><span class='label label - primary'>" + userDetailReader.GetValue(1) + "</span></td>");
+                    userDetais.Append("<td>" + userDetailReader.GetValue(2) + "</td>");
+                    userDetais.Append("<td>" + userDetailReader.GetValue(3) + "</td>");
+                    userDetais.Append("<td>" + userDetailReader.GetValue(4) + "</td>");
+                    userDetais.Append("<td align='center'>" + userDetailReader.GetValue(5) + "</td>");
+                    userDetais.Append("<td align='center'>" + userDetailReader.GetValue(6) + "</td>");
+                    userDetais.Append("</tr>");
+                }
+                userDetailReader.Close();
+                UserTablePlaceholder.Controls.Add(new Literal { Text = userDetais.ToString() }); ;
 
                 SqlCommand cmdSelectItemDetails = new SqlCommand {
                     Connection = connection,
@@ -120,6 +146,56 @@ namespace SSMS {
             System.Diagnostics.Debug.WriteLine("Index Session Logout:");
             HttpContext.Current.Session.Abandon();
             Response.Redirect("Login.aspx");
+        }
+
+        [WebMethod]
+        public static string ChangePassword(string oldPassword, string newPassword)
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(connectingStringSSMS);
+                connection.Open();
+
+                SqlCommand cmdVerifyUser = new SqlCommand
+                {
+                    Connection = connection,
+                    CommandText = "SELECT password FROM users WHERE user_name = '" + userName +"' AND password = '" + oldPassword +"'",
+                    CommandType = CommandType.Text
+                };
+
+                SqlDataReader credentialsReader = cmdVerifyUser.ExecuteReader();
+                //return credentialsReader.HasRows.ToString();
+                if (credentialsReader.HasRows)
+                {
+                    SqlCommand changeUserPassword = new SqlCommand
+                    {
+                        Connection = connection,
+                        CommandText = "UPDATE users SET password = '" + newPassword + "' WHERE user_name = '" + userName + "'",
+                        CommandType = CommandType.Text
+                    };
+
+                    int changePasswordCount = changeUserPassword.ExecuteNonQuery();
+                    credentialsReader.Close();
+                    connection.Close();
+                    connection.Dispose();
+                    if (changePasswordCount == 1)
+                    {
+                        return ("0");
+                    }
+                    else
+                    {
+                        return ("2");
+                    }
+                }
+                else
+                {
+                    return ("1");
+                }
+
+            } catch (Exception e)
+            {
+                return e.Message;
+            }
         }
 
         [WebMethod]

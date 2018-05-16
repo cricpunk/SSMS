@@ -12,13 +12,13 @@ using System.Web.UI.WebControls;
 namespace SSMS {
     public partial class Suppliers : System.Web.UI.Page {
 
-        public static string currentUser;
+        public static string currentUser, currentUserId, userName;
 
         //For Purushottam's database server
-        //protected static string connectingStringSSMS = "Data Source=DESKTOP-JI61OUF\\SQLEXPRESS; Initial Catalog=SSMS; Integrated Security=True; MultipleActiveResultSets=true";
+        protected static string connectingStringSSMS = "Data Source=DESKTOP-JI61OUF\\SQLEXPRESS; Initial Catalog=SSMS; Integrated Security=True; MultipleActiveResultSets=true";
 
         //For Pankaj's database server
-        protected static string connectingStringSSMS = "Data Source=DESKTOP-1NMRQA9\\SQLEXPRESS; Initial Catalog=SSMS; Integrated Security=True; MultipleActiveResultSets=true";
+        //protected static string connectingStringSSMS = "Data Source=DESKTOP-1NMRQA9\\SQLEXPRESS; Initial Catalog=SSMS; Integrated Security=True; MultipleActiveResultSets=true";
 
         protected void Page_Load(object sender, EventArgs e) {
 
@@ -29,6 +29,8 @@ namespace SSMS {
             else
             {
                 currentUser = Session["Full_Name"].ToString();
+                userName = Session["User_Name"].ToString();
+                currentUserId = Session["User_Id"].ToString();
                 System.Diagnostics.Debug.WriteLine("Supplier Session username: " + Session["Name"].ToString());
             }
 
@@ -93,6 +95,57 @@ namespace SSMS {
             System.Diagnostics.Debug.WriteLine("Index Session Logout:");
             HttpContext.Current.Session.Abandon();
             Response.Redirect("Login.aspx");
+        }
+
+        [WebMethod]
+        public static string ChangePassword(string oldPassword, string newPassword)
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(connectingStringSSMS);
+                connection.Open();
+
+                SqlCommand cmdVerifyUser = new SqlCommand
+                {
+                    Connection = connection,
+                    CommandText = "SELECT password FROM users WHERE user_name = '" + userName + "' AND password = '" + oldPassword + "'",
+                    CommandType = CommandType.Text
+                };
+
+                SqlDataReader credentialsReader = cmdVerifyUser.ExecuteReader();
+                //return credentialsReader.HasRows.ToString();
+                if (credentialsReader.HasRows)
+                {
+                    SqlCommand changeUserPassword = new SqlCommand
+                    {
+                        Connection = connection,
+                        CommandText = "UPDATE users SET password = '" + newPassword + "' WHERE user_name = '" + userName + "'",
+                        CommandType = CommandType.Text
+                    };
+
+                    int changePasswordCount = changeUserPassword.ExecuteNonQuery();
+                    credentialsReader.Close();
+                    connection.Close();
+                    connection.Dispose();
+                    if (changePasswordCount == 1)
+                    {
+                        return ("0");
+                    }
+                    else
+                    {
+                        return ("2");
+                    }
+                }
+                else
+                {
+                    return ("1");
+                }
+
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
         }
 
         [WebMethod]
