@@ -38,20 +38,17 @@
 
     <style type="text/css">
     	
-    	 .gallery-col {
-    		width: 80px !Important;
-    		height: 80px !Important;
-    		margin: 0 15px 15px 0 !important;
-    		position: fixed !important; 
-            bottom: 0px !important; 
-            right: 0px !important;
-            z-index: 100 !important;
+    	.gallery-grid .gallery-col {
+    		width: 100px !Important;
+    		height: 100px !Important;
+    		margin-right: 15px;
+    		margin-top: -13px;
     	}
 
     	.gallery-item {
     		border-radius: 100px !Important;
-    		width: 80px !Important;
-    		height: 80px !Important;
+    		width: 100px !Important;
+    		height: 100px !Important;
     	}
 
     	.gallery-item .gallery-picture {
@@ -63,7 +60,7 @@
     		cursor: pointer;
     	}
 
-  		.select2-selection__arrow {
+    	.select2-selection__arrow {
   			margin-top: 5px !important;
   		}
 
@@ -83,10 +80,7 @@
             background: darkmagenta;
         }
 
-        .box-typical.box-typical-dashboard .box-typical-body {
-            overflow: auto;
-            height: 700px;
-        }
+
 
     </style>
 
@@ -163,8 +157,10 @@
 	                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
 	                            <a class="dropdown-item" href="#" id="currentUser"><span class="font-icon glyphicon glyphicon-user"></span><%=currentUser%></a>
 	                            <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#changePasswordModal" id="changePassword"><span class="font-icon glyphicon glyphicon-user"></span>Change Password</a>
+	                            <form runat="server">                                
+                                <div class="dropdown-divider"></div>
 	                            <a class="dropdown-item" href="#" onclick="document.getElementById('btnLogOut').click()"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
-                                <form runat="server">
                                     <asp:Button ID="btnLogOut" runat="server" Text="Call Button Click"  Style="display:none" OnClick="logOut" />
                                 </form>
 	                        </div>
@@ -248,18 +244,79 @@
 
 	<div class="page-content">
 
-        <div class="gallery-col" data-toggle="modal" data-target="#salesModal" id="btnSaleCircle">
-		    <article class="gallery-item">
-			    <img class="gallery-picture" src="img/sales.png" alt="">
-			    <div class="gallery-hover-layout">
-				    <div class="gallery-hover-layout-in">
-					    <p>SALE</p>
-				    </div>
-			    </div>
-		    </article>
-	    </div><!--.gallery-col-->
+	    <div class="container-fluid">
 
-	    <div class="container-fluid">   		
+	    	
+    		<div class="row">
+	    		<div class="col-xl-6">
+	    			<div class="box-typical box-typical-padding" style="background-color: #00a8ff; height: 145px;">
+						<div class="gallery-grid">
+
+							<div class="gallery-col" data-toggle="modal" data-target="#salesModal" id="btnSaleCircle">
+								<article class="gallery-item">
+									<img class="gallery-picture" src="img/sales.png" alt="">
+									<div class="gallery-hover-layout">
+										<div class="gallery-hover-layout-in">
+											<p>SALE</p>
+										</div>
+									</div>
+								</article>
+							</div><!--.gallery-col-->
+
+							<div class="gallery-col">
+								<article class="gallery-item">
+									<img class="gallery-picture" src="img/order.png" alt="">
+									<div class="gallery-hover-layout">
+										<div class="gallery-hover-layout-in">
+											<p>ORDER</p>
+										</div>
+									</div>
+								</article>
+							</div><!--.gallery-col-->
+
+							<div class="gallery-col">
+								<article class="gallery-item">
+									<img class="gallery-picture" src="img/add.png" alt="">
+									<div class="gallery-hover-layout">
+										<div class="gallery-hover-layout-in">
+											<p>ADD ITEM</p>
+										</div>
+									</div>
+								</article>
+							</div><!--.gallery-col-->
+						</div>
+					</div>
+				</div>
+
+				<div class="col-xl-6">
+					<div class="row">
+	                    <div class="col-sm-6">
+	                        <article class="statistic-box red">
+	                            <div>
+	                                <div class="number">26</div>
+	                                <div class="caption"><div>Open tickets</div></div>
+	                                <div class="percent">
+	                                    <div class="arrow up"></div>
+	                                    <p>15%</p>
+	                                </div>
+	                            </div>
+	                        </article>
+	                    </div><!--.col-->
+	                    <div class="col-sm-6">
+	                        <article class="statistic-box purple">
+	                            <div>
+	                                <div class="number">12</div>
+	                                <div class="caption"><div>Closes tickets</div></div>
+	                                <div class="percent">
+	                                    <div class="arrow down"></div>
+	                                    <p>11%</p>
+	                                </div>
+	                            </div>
+	                        </article>
+	                    </div><!--.col-->
+	                </div>
+            	</div>
+        	</div>
 	
             <div class="row">
                 <div class="col-xl-12 dahsboard-column">
@@ -291,6 +348,37 @@
 	                </section><!--.box-typical-dashboard-->
 	            </div><!--.col-->
             </div>
+
+	        <div class="row">
+	            <div class="col-xl-12 dahsboard-column">
+	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
+	                    <header class="box-typical-header panel-heading">
+	                        <h3 class="panel-title">Users</h3>
+	                    </header>
+	                    <div class="box-typical-body panel-body">
+	                        <table class="tbl-typical">
+	                           <thead>
+	                                <tr>
+                                        <th width="1"><div>#</div></th>
+	                                    <th><div>User Id</div></th>
+                                        <th><div>Full Name</div></th>
+                                        <th><div>username</div></th>
+                                        <th><div>User Type</div></th>
+	                                    <th><div>Phone</div></th>
+	                                    <th><div>Email</div></th>
+	                                    <th><div>Address</div></th>
+                                        <th class="tabledit-toolbar-column">Controls</th>
+	                                </tr>
+                                </thead>
+                                <tbody>
+                                    <asp:PlaceHolder ID="UserTablePlaceholder" runat="server"></asp:PlaceHolder>
+					    	        <%--Dynamic Content--%>	                                
+                                </tbody>
+	                        </table>
+	                    </div><!--.box-typical-body-->
+	                </section><!--.box-typical-dashboard-->
+	            </div><!--.col-->
+	        </div>
 
 	    </div><!--.container-fluid-->
 
@@ -477,6 +565,62 @@
         </div>
         <!-- modal -->
 
+        <!-- change password modal -->
+	    <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #00a8ff; color: #fff">
+                        <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                            <i class="font-icon-close-2"></i>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Change Password</h4>
+                    </div>
+                    <div class="modal-upload">
+                        <div class="modal-upload-cont">                      
+                            <section class="card" style="margin: 10px 20px 10px 20px;">
+							    <div class="card-block" style="margin:2px;">
+
+								    <form class="sign-box reset-password-box" id="changePasswordForm" name="changePasswordForm" method="POST">
+                                        <!--<div class="sign-avatar">
+                                            <img src="img/avatar-sign.png" alt="">
+                                        </div>-->
+
+                                        <!-- Information displayer -->
+                                        <div class="form-error-text-block hidden alertBoxes" id="infoDisplayer">Username must be between 6 and 18 characters.</div>
+
+                                        <div class="form-group">
+                                            <label class="form-label" for="old_password">Old Password</label>
+                                            <div class="form-control-wrapper">
+                                            <input type="password" class="form-control" id="old_password" placeholder="Old Password" name="Old Password" data-validation="[NOTEMPTY]"
+                                                    data-validation-message="Invalid $ ."/>
+                                                </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" for="new_password">New Password</label>
+                                            <div class="form-control-wrapper">
+                                            <input type="password" class="form-control" id="new_password" placeholder="New Password" name="New Password" data-validation="[NOTEMPTY]"
+                                                    data-validation-message="Invalid $ ."/>
+                                                </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label style="color: crimson" class="form-label">Enter the new password carefully! You will have to request to manager if you forget your password.</label>
+                                        </div>
+
+                                        <button type="submit" data-dismiss="modal" aria-label="Close" class="btn btn-rounded btn-block">Submit</button>
+								    </form>		
+                                    
+							    </div>
+						    </section>
+                        </div><!--.modal-upload-cont-->
+                    </div>
+
+               
+                </div>
+            </div>
+        </div>
+        <!-- change password modal -->
+
         <div class="col-md-6 hidden">
 		    <select class="select2" multiple="multiple">
 			    <option data-icon="font-icon-home">Quant Verbal</option>
@@ -647,7 +791,87 @@
                 });
             }
 
-        }  
+        } 
+
+        function changePassword() {
+            var oldPassword = $("#old_password").val();
+            var newPassword = $("#new_password").val();
+
+            var data = JSON.stringify({
+                oldPassword: oldPassword,
+                newPassword: newPassword
+            });
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    url: "Index.aspx/ChangePassword",
+                    data: data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: onSuccess,
+                    failure: onFailure
+                });
+
+                function onFailure(AjaxResponse) {
+                    swal({
+                        title: "Error found",
+                        text: AjaxResponse.d,
+                        type: "warning"
+                    });
+                }
+
+                function onSuccess(AjaxResponse) {
+                    console.log("after query: " + AjaxResponse.d);
+                    switch (AjaxResponse.d) {
+                        case "0":
+                            swal({
+                                title: "Success!",
+                                text: "Password changed successfully!",
+                                type: "success",
+                                confirmButtonClass: "btn-success",
+                                confirmButtonText: "Done"
+                            });
+                            $("#changePasswordModal").modal('hide');
+                            break;
+                        case "1":
+                            swal({
+                                title: "Error!",
+                                text: "Current password not matched!",
+                                type: "error"
+                            });
+                            break;
+                    }
+                }
+            } catch (exe) {
+                swal({
+                    title: "Error found",
+                    text: exe,
+                    type: "warning"
+                });
+                $("#changePasswordModal").modal('hide');
+            }
+        }
+
+        $('#changePasswordForm').validate({
+
+            submit: {
+                settings: {
+                    inputContainer: '.form-group',
+                    errorListClass: 'form-tooltip-error',
+                },
+                callback: {
+                    onBeforeSubmit: function (node) {
+                        console.log("After Submit Call");
+                        // Successfull form validation call change password method
+                        changePassword();
+                    },
+                    onSubmit: function (node, formData) {
+                        console.log("After Submit");
+                    }
+                }
+            }
+        });
 
         // Sale button click function
         $("#btnSaleCircle").click(function () {
